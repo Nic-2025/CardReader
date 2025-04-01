@@ -1,0 +1,133 @@
+﻿using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace IdCard.Hanel_obj.auxi
+{
+
+    public static class LicenseUtils
+    {
+        public const string LicensePath = @".\data\data.bin"; // Changed from static to const
+
+        public const string AesKeyHex = "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4";
+        public const string PublicKeyBase64 = "1lB4WvgA10UDuy98WNnf9A==";
+
+        public static bool ValidateLicense(string licenseHex, string publicKeyBase64, out DateTime expired)
+        {
+            expired = DateTime.MinValue; // Initialize expired to a default value
+
+            var licenseBytes = Convert.FromHexString(licenseHex);
+            var data = new byte[16];
+            var signature = new byte[8];
+
+            Array.Copy(licenseBytes, 0, data, 0, 16);
+            Array.Copy(licenseBytes, 16, signature, 0, 8);
+
+            var key = Convert.FromBase64String(publicKeyBase64);
+            using var hmac = new HMACSHA256(key);
+            var computedSignature = hmac.ComputeHash(data.ToArray()).Take(8).ToArray();
+
+            if (!computedSignature.SequenceEqual(signature))
+                return false;
+
+            uint packedValue = BitConverter.ToUInt32(data, 12); // Convert byte array to uint
+            int unpackedX = (int)(packedValue >> 24); // Extract the year value
+            int unpackedY = (int)((packedValue >> 16) & 0xFF); // Extract the month value
+            int unpackedZ = (int)((packedValue >> 8) & 0xFF); // Extract the day value
+
+            expired = new DateTime(unpackedX + 2024, unpackedY, unpackedZ);
+
+            return expired >= DateTime.Now;
+        }
+
+        public static void SaveLicenseToFile(string licenseHex, string aesKeyHex)
+        {
+            var licenseBytes = Convert.FromHexString(licenseHex);
+            var aesKey = Convert.FromHexString(aesKeyHex);
+
+            using var aes = Aes.Create();
+            aes.Key = aesKey;
+            aes.GenerateIV();
+            using var encryptor = aes.CreateEncryptor();
+            using var fs = new FileStream(LicensePath, FileMode.Create, FileAccess.Write);
+            fs.Write(aes.IV, 0, aes.IV.Length);
+            using var cryptoStream = new CryptoStream(fs, encryptor, CryptoStreamMode.Write);
+            cryptoStream.Write(licenseBytes, 0, licenseBytes.Length);
+        }
+
+        public static string LoadLicenseFromFile(string aesKeyHex)
+        {
+            var aesKey = Convert.FromHexString(aesKeyHex);
+
+            using var aes = Aes.Create();
+            aes.Key = aesKey;
+
+            using var fs = new FileStream(LicensePath, FileMode.Open, FileAccess.Read);
+            var iv = new byte[16];
+            fs.Read(iv, 0, iv.Length);
+            aes.IV = iv;
+
+            using var decryptor = aes.CreateDecryptor();
+            using var cryptoStream = new CryptoStream(fs, decryptor, CryptoStreamMode.Read);
+            using var ms = new MemoryStream();
+            cryptoStream.CopyTo(ms);
+
+            return Convert.ToHexString(ms.ToArray());
+        }
+    }
+
+    public class License
+    {
+        public bool IsValid { get; } = false;
+
+        public DateTime Expired { get; } = DateTime.MinValue;
+
+        public string LicenseHex { get; }
+
+        public License()
+        {
+            try
+            {
+                //"0121DCE36900D055A7F52044EE0D07016E435135D4189A95"
+                if (File.Exists(LicenseUtils.LicensePath))
+                {
+                    LicenseHex = LicenseUtils.LoadLicenseFromFile(LicenseUtils.AesKeyHex);
+                    IsValid = LicenseUtils.ValidateLicense(LicenseHex, LicenseUtils.PublicKeyBase64, out DateTime expired);
+                    Expired = expired;
+                }
+                else
+                {
+                    LicenseHex = string.Empty;
+                    IsValid = false;
+                }
+            }
+            catch
+            {
+                LicenseHex = string.Empty;
+                IsValid = false;
+            }
+        }
+
+        public License(string license)
+        {
+            try
+            {
+                LicenseHex = license;
+                //"0121DCE36900D055A7F52044EE0D07016E435135D4189A95"
+                IsValid = LicenseUtils.ValidateLicense(LicenseHex, LicenseUtils.PublicKeyBase64, out DateTime expired);
+                Expired = expired;
+                if (IsValid)
+                {
+                    LicenseUtils.SaveLicenseToFile(license, LicenseUtils.AesKeyHex);
+                }
+            }
+            catch
+            {
+                LicenseHex = string.Empty;
+                IsValid = false;
+            }
+        }
+
+    }
+}
