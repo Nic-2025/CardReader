@@ -37,18 +37,20 @@
             lbStatus.Dock = DockStyle.Fill;
             lbStatus.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbStatus.Location = new Point(0, 0);
+            lbStatus.Margin = new Padding(2, 0, 2, 0);
             lbStatus.Name = "lbStatus";
-            lbStatus.Size = new Size(91, 38);
+            lbStatus.Size = new Size(63, 25);
             lbStatus.TabIndex = 0;
             lbStatus.Text = "label1";
             // 
             // UiSignIOStatus
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(lbStatus);
+            Margin = new Padding(2);
             Name = "UiSignIOStatus";
-            Size = new Size(209, 48);
+            Size = new Size(146, 29);
             ResumeLayout(false);
             PerformLayout();
         }

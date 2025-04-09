@@ -24,13 +24,17 @@ namespace IdCard.Hanel_obj.components.forms
         User? _user;
         UserControl? _userControl;
 
-
-        public auxi.License _license = new();
+        //public auxi.License _license = new();
 
         public MonitorForm()
         {
             InitializeComponent();
-            pnAuth.Controls.Add(_authComponent);
+
+
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.WindowState = FormWindowState.Maximized;
+
+            //pnAuth.Controls.Add(_authComponent);
             _authComponent.OnDone += HandleAuthDone;
 
 
@@ -43,22 +47,25 @@ namespace IdCard.Hanel_obj.components.forms
             FormClosing += MonitorForm_FormClosing;
         }
 
+
         private async void MonitorForm_Load(object? sender, EventArgs e)
         {
             // Ensure the form is fully displayed
             await Task.Delay(200); // Small delay to ensure the form is rendered
 
+            this.WindowState = FormWindowState.Maximized;
+            this.Load += (s, e) => MonitorForm_Resize(null, null);
 
             var formLogin = new FormLogin();
             formLogin.ShowDialog();
             _user = formLogin.User;
 
-            if (!_license.IsValid)
-            {
-                MessageBox.Show("License is not valid. Please activate your license.", "License Error");
-                OnChangeContentType(ContentType.License);
-                return;
-            }
+            //if (!_license.IsValid)
+            //{
+            //    MessageBox.Show("License is not valid. Please activate your license.", "License Error");
+            //    OnChangeContentType(ContentType.License);
+            //    return;
+            //}
 
             OnChangeContentType(ContentType.DailyLogbook);
 
@@ -85,10 +92,10 @@ namespace IdCard.Hanel_obj.components.forms
 
         private void OnChangeContentType(ContentType newType)
         {
-            if (!_license.IsValid)
-            {
-                newType = ContentType.License;
-            }
+            //if (!_license.IsValid)
+            //{
+            //    newType = ContentType.License;
+            //}
 
             _currentContentType = newType;
             switch (newType)
@@ -113,11 +120,11 @@ namespace IdCard.Hanel_obj.components.forms
                     newCtrl.CurrentUser = _user;
                     HandleChange(newCtrl);
                     break;
-                case ContentType.License:
-                    var newCtrlLicense = new UiLicense();
-                    newCtrlLicense.OnActive += HandleLicenseActive;
-                    HandleChange(newCtrlLicense);
-                    break;
+                //case ContentType.License:
+                //    var newCtrlLicense = new UiLicense();
+                //    //newCtrlLicense.OnActive += HandleLicenseActive;
+                //    HandleChange(newCtrlLicense);
+                //    break;
                 case ContentType.About:
                     HandleChange(new UiAbout());
                     break;
@@ -128,16 +135,26 @@ namespace IdCard.Hanel_obj.components.forms
         private void HandleChange(UserControl? newControl)
         {
             // Clear the current content of pnContent
-            pnContent.Controls.Clear();
+            //pnContent.Controls.Clear();
+            pnContentWrapper.Controls.Clear();
+            pnContent.AutoScroll = true;
+
+            pnContentWrapper.Size = new Size(pnContent.Width -16 , 1500);
+            pnContentWrapper.Location = new Point(0, 0);
+            pnContentWrapper.Padding = new Padding(16);
+
+
             _userControl = newControl;
 
             // Add the new control to pnContent
             if (newControl != null)
             {
-                pnContent.Controls.Add(newControl);
+                //pnContent.Controls.Add(newControl);
+                pnContentWrapper.Controls.Add(newControl);
+
             }
             //pnAuth.Visible = _currentContentType == ContentType.DailyLogbook;
-            pnAuth.Visible = true;
+            //pnAuth.Visible = true;
         }
 
         private void BtnDailyLog_Click(object sender, EventArgs e)
@@ -186,7 +203,7 @@ namespace IdCard.Hanel_obj.components.forms
 
         private void HandleLicenseActive(auxi.License license)
         {
-            _license = license;
+            //_license = license;
             if (license.IsValid)
             {
                 OnChangeContentType(ContentType.DailyLogbook);
@@ -197,5 +214,71 @@ namespace IdCard.Hanel_obj.components.forms
             }
 
         }
+
+        private void pnNav_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pnContent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void MonitorForm_Resize(object? sender, EventArgs e)
+        {
+            int totalWidth = this.ClientSize.Width;
+            int navWidth = totalWidth * 2 / 12;
+            int contentWidth = totalWidth - navWidth;
+
+            pnNav.Width = navWidth;
+            pnNav.Height = this.ClientSize.Height;
+            pnNav.Location = new Point(0, 0);
+
+            pnContent.Width = contentWidth;
+            pnContent.Height = this.ClientSize.Height;
+            pnContent.Location = new Point(navWidth, 0);
+
+
+
+            int padding = 8; // hoặc 0 nếu không cần khoảng cách hai bên
+            int btnWidth = pnNav.ClientSize.Width - padding * 2;
+
+            btnAbout.Width = btnWidth;
+            btnAbout.Height = 40;
+
+            btnLicense.Width = btnWidth;
+            btnLicense.Height = 40;
+
+            btnReports.Width = btnWidth;
+            btnReports.Height = 40;
+
+            btnAddressBook.Width = btnWidth;
+            btnAddressBook.Height = 40;
+
+            btnFormInfo.Width = btnWidth;
+            btnFormInfo.Height = 40;
+
+            btnChangePwd.Width = btnWidth;
+            btnChangePwd.Height = 40;
+
+            btnDailyLog.Width = btnWidth;
+            btnDailyLog.Height = 40;
+
+
+        }
+
+  
     }
 }

@@ -80,9 +80,6 @@
     <None Update="hidapi.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="lib\hidapi.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
     <None Update="model\detect.caffemodel">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -98,10 +95,6 @@
     <None Update="reader.log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="lib\" />
   </ItemGroup>
 
 </Project>

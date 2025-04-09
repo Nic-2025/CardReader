@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace IdCard.Hanel_obj.components
 {
@@ -52,14 +53,15 @@ namespace IdCard.Hanel_obj.components
             pnlPages.Controls.Clear();
 
             int buttonSpacing = 10; // Space between buttons
-            int buttonWidth = 60;
-            int buttonHeight = 40;
+            int buttonWidth = 30;
+            int buttonHeight = 30;
             int startX = 0; // Starting X position for the first button
 
             // Position the "Previous" button
             btnPrevious.Location = new Point(startX, 0);
             btnPrevious.Width = buttonWidth;
             btnPrevious.Height = buttonHeight;
+
 
             pnlPages.Controls.Add(btnPrevious);
             startX += buttonWidth + buttonSpacing;
@@ -116,5 +118,7 @@ namespace IdCard.Hanel_obj.components
                 CurrentPage++;
             }
         }
+
     }
+
 }

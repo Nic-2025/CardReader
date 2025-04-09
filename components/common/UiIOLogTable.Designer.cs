@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             dgvLogIO = new DataGridView();
-            btnReload = new Button();
-            uiPaginition1 = new UiPaginition();
             STT = new DataGridViewTextBoxColumn();
             HoTen = new DataGridViewTextBoxColumn();
             CCCD = new DataGridViewTextBoxColumn();
@@ -38,109 +39,252 @@
             SignedOut = new DataGridViewTextBoxColumn();
             TrangThai = new DataGridViewTextBoxColumn();
             BtnChiTiet = new DataGridViewButtonColumn();
+            uiPaginition1 = new UiPaginition();
+            panel1 = new Panel();
+            panel2 = new Panel();
+            panel4 = new Panel();
+            panel3 = new Panel();
+            countSignedOut = new Label();
+            countAll = new Label();
+            label4 = new Label();
+            countSignedIn = new Label();
+            label3 = new Label();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvLogIO).BeginInit();
+            panel1.SuspendLayout();
+            panel2.SuspendLayout();
+            panel4.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // dgvLogIO
             // 
             dgvLogIO.AllowUserToAddRows = false;
             dgvLogIO.AllowUserToDeleteRows = false;
-            dgvLogIO.ColumnHeadersHeight = 34;
+            dgvLogIO.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvLogIO.BackgroundColor = Color.White;
+            dgvLogIO.BorderStyle = BorderStyle.None;
+            dgvLogIO.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.Black;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvLogIO.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvLogIO.ColumnHeadersHeight = 48;
             dgvLogIO.Columns.AddRange(new DataGridViewColumn[] { STT, HoTen, CCCD, SignedIn, SignedOut, TrangThai, BtnChiTiet });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvLogIO.DefaultCellStyle = dataGridViewCellStyle2;
             dgvLogIO.Dock = DockStyle.Top;
+            dgvLogIO.EnableHeadersVisualStyles = false;
+            dgvLogIO.GridColor = Color.FromArgb(234, 236, 240);
             dgvLogIO.Location = new Point(0, 0);
+            dgvLogIO.Margin = new Padding(2);
             dgvLogIO.Name = "dgvLogIO";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvLogIO.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dgvLogIO.RowHeadersVisible = false;
             dgvLogIO.RowHeadersWidth = 62;
-            dgvLogIO.Size = new Size(1506, 634);
+            dgvLogIO.RowTemplate.Height = 57;
+            dgvLogIO.Size = new Size(1274, 618);
             dgvLogIO.TabIndex = 0;
             // 
-            // btnReload
+            // STT
             // 
-            btnReload.Location = new Point(0, 640);
-            btnReload.Name = "btnReload";
-            btnReload.Size = new Size(112, 34);
-            btnReload.TabIndex = 0;
-            btnReload.Text = "Reload";
-            btnReload.UseVisualStyleBackColor = true;
-            btnReload.Click += BtnReload_Click;
+            STT.FillWeight = 5F;
+            STT.HeaderText = "STT";
+            STT.Name = "STT";
+            // 
+            // HoTen
+            // 
+            HoTen.FillWeight = 20F;
+            HoTen.HeaderText = "Họ Tên";
+            HoTen.Name = "HoTen";
+            // 
+            // CCCD
+            // 
+            CCCD.FillWeight = 20F;
+            CCCD.HeaderText = "CCCD";
+            CCCD.Name = "CCCD";
+            // 
+            // SignedIn
+            // 
+            SignedIn.FillWeight = 15F;
+            SignedIn.HeaderText = "Signed In";
+            SignedIn.Name = "SignedIn";
+            // 
+            // SignedOut
+            // 
+            SignedOut.FillWeight = 15F;
+            SignedOut.HeaderText = "Signed Out";
+            SignedOut.Name = "SignedOut";
+            // 
+            // TrangThai
+            // 
+            TrangThai.FillWeight = 15F;
+            TrangThai.HeaderText = "Trạng thái";
+            TrangThai.Name = "TrangThai";
+            // 
+            // BtnChiTiet
+            // 
+            BtnChiTiet.FillWeight = 10F;
+            BtnChiTiet.HeaderText = "";
+            BtnChiTiet.Name = "BtnChiTiet";
+            BtnChiTiet.Resizable = DataGridViewTriState.True;
+            BtnChiTiet.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // uiPaginition1
             // 
             uiPaginition1.CurrentPage = 0;
-            uiPaginition1.Location = new Point(507, 640);
+            uiPaginition1.Location = new Point(1, 13);
+            uiPaginition1.Margin = new Padding(1);
             uiPaginition1.Name = "uiPaginition1";
-            uiPaginition1.Size = new Size(999, 82);
+            uiPaginition1.Size = new Size(319, 49);
             uiPaginition1.TabIndex = 1;
             uiPaginition1.TotalPages = 0;
+            uiPaginition1.Load += uiPaginition1_Load;
             // 
-            // STT
+            // panel1
             // 
-            STT.HeaderText = "STT";
-            STT.MinimumWidth = 8;
-            STT.Name = "STT";
-            STT.Width = 150;
+            panel1.Controls.Add(panel2);
+            panel1.Controls.Add(dgvLogIO);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1274, 796);
+            panel1.TabIndex = 2;
             // 
-            // HoTen
+            // panel2
             // 
-            HoTen.HeaderText = "Họ Tên";
-            HoTen.MinimumWidth = 8;
-            HoTen.Name = "HoTen";
-            HoTen.Width = 250;
+            panel2.Controls.Add(panel4);
+            panel2.Controls.Add(panel3);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 618);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1274, 63);
+            panel2.TabIndex = 2;
             // 
-            // CCCD
+            // panel4
             // 
-            CCCD.HeaderText = "CCCD";
-            CCCD.MinimumWidth = 8;
-            CCCD.Name = "CCCD";
-            CCCD.Width = 250;
+            panel4.Controls.Add(uiPaginition1);
+            panel4.Dock = DockStyle.Right;
+            panel4.Location = new Point(850, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(424, 63);
+            panel4.TabIndex = 3;
             // 
-            // SignedIn
+            // panel3
             // 
-            SignedIn.HeaderText = "Signed In";
-            SignedIn.MinimumWidth = 8;
-            SignedIn.Name = "SignedIn";
-            SignedIn.Width = 150;
+            panel3.Controls.Add(countSignedOut);
+            panel3.Controls.Add(label4);
+            panel3.Controls.Add(countSignedIn);
+            panel3.Controls.Add(label3);
+            panel3.Controls.Add(countAll);
+            panel3.Controls.Add(label1);
+            panel3.Dock = DockStyle.Left;
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(459, 63);
+            panel3.TabIndex = 2;
             // 
-            // SignedOut
+            // countSignedOut
             // 
-            SignedOut.HeaderText = "Signed Out";
-            SignedOut.MinimumWidth = 8;
-            SignedOut.Name = "SignedOut";
-            SignedOut.Width = 150;
+            countSignedOut.AutoSize = true;
+            countSignedOut.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            countSignedOut.ForeColor = Color.Red;
+            countSignedOut.Location = new Point(379, 28);
+            countSignedOut.Name = "countSignedOut";
+            countSignedOut.Size = new Size(39, 15);
+            countSignedOut.TabIndex = 5;
+            countSignedOut.Text = "result";
+            countSignedOut.Click += countSignedOut_Click;
             // 
-            // TrangThai
+            // countAll
             // 
-            TrangThai.HeaderText = "Trạng thái";
-            TrangThai.MinimumWidth = 8;
-            TrangThai.Name = "TrangThai";
-            TrangThai.Width = 150;
+            countAll.AutoSize = true;
+            countAll.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            countAll.ForeColor = Color.Black;
+            countAll.Location = new Point(47, 28);
+            countAll.Name = "countAll";
+            countAll.Size = new Size(39, 15);
+            countAll.TabIndex = 1;
+            countAll.Text = "result";
             // 
-            // BtnChiTiet
+            // label4
             // 
-            BtnChiTiet.HeaderText = "";
-            BtnChiTiet.MinimumWidth = 8;
-            BtnChiTiet.Name = "BtnChiTiet";
-            BtnChiTiet.Resizable = DataGridViewTriState.True;
-            BtnChiTiet.SortMode = DataGridViewColumnSortMode.Automatic;
-            BtnChiTiet.Width = 150;
+            label4.AutoSize = true;
+            label4.Location = new Point(256, 28);
+            label4.Name = "label4";
+            label4.RightToLeft = RightToLeft.No;
+            label4.Size = new Size(117, 15);
+            label4.TabIndex = 4;
+            label4.Text = "Số lượng Signed out:";
+            // 
+            // countSignedIn
+            // 
+            countSignedIn.AutoSize = true;
+            countSignedIn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            countSignedIn.ForeColor = Color.Green;
+            countSignedIn.Location = new Point(205, 28);
+            countSignedIn.Name = "countSignedIn";
+            countSignedIn.Size = new Size(39, 15);
+            countSignedIn.TabIndex = 3;
+            countSignedIn.Text = "result";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(99, 28);
+            label3.Name = "label3";
+            label3.RightToLeft = RightToLeft.No;
+            label3.Size = new Size(109, 15);
+            label3.TabIndex = 2;
+            label3.Text = "Số lượng Signed in:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(6, 28);
+            label1.Name = "label1";
+            label1.RightToLeft = RightToLeft.No;
+            label1.Size = new Size(45, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Tất cả: ";
             // 
             // UiIOLogTable
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(uiPaginition1);
-            Controls.Add(btnReload);
-            Controls.Add(dgvLogIO);
+            Controls.Add(panel1);
+            Margin = new Padding(2);
             Name = "UiIOLogTable";
-            Size = new Size(1506, 797);
+            Size = new Size(1274, 796);
+            Load += UiIOLogTable_Load;
             ((System.ComponentModel.ISupportInitialize)dgvLogIO).EndInit();
+            panel1.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel4.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ResumeLayout(false);
         }
-
         #endregion
 
         private DataGridView dgvLogIO;
-        private Button btnReload;
         private components.UiPaginition uiPaginition1;
         private DataGridViewTextBoxColumn STT;
         private DataGridViewTextBoxColumn HoTen;
@@ -149,5 +293,15 @@
         private DataGridViewTextBoxColumn SignedOut;
         private DataGridViewTextBoxColumn TrangThai;
         private DataGridViewButtonColumn BtnChiTiet;
+        private Panel panel1;
+        private Panel panel2;
+        private Panel panel3;
+        private Panel panel4;
+        private Label countSignedOut;
+        private Label label4;
+        private Label countSignedIn;
+        private Label label3;
+        private Label countAll;
+        private Label label1;
     }
 }

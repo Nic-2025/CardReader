@@ -10,6 +10,7 @@ namespace IdCard.Hanel_obj.components
             InitializeComponent();
             uiioLogTable1.From = DateTime.Now.Date;
             lbDate.Text = DateTime.Now.Date.ToString("dd/MM/yyyyy");
+            this.Dock = DockStyle.Fill;
         }
 
         public void Reload()
