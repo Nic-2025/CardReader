@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdCard.Hanel.Models
 {
-
     public enum IOAction
     {
         None = 0,
         CheckIn = 1,
         CheckOut = 2,
     }
+
 
     [Table("Users")] // Ensure the table name matches the database schema
     public class User
@@ -71,31 +71,53 @@ namespace IdCard.Hanel.Models
     {
         public string Id { get; set; } = string.Empty; // CCCD
 
-        // Additional fields
-        public DateTime NgayCap { get; set; } // Ngày cấp
-
-        public DateTime NgayHetHan { get; set; } // Ngày hết hạn
+        public string HoTen { get; set; } = string.Empty; // Họ tên
+        public string GioiTinh { get; set; } = string.Empty; // Giới tính
+        public string DiaChi { get; set; } = ""; // Địa chỉ
+        public DateTime CreatedAt { get; set; }
         public DateTime NgaySinh { get; set; }  // Ngày sinh
 
+        public List<InOutLog>? InOutLogs { get; set; }
+
+        [NotMapped] // Exclude from database mapping
+        public byte[]? HinhAnh { get; set; } // Hình ảnh
+
+        [NotMapped] // Exclude from database mapping
+        public DateTime NgayHetHan { get; set; } // Ngày hết hạn
+
+        [NotMapped] // Exclude from database mapping
+        public DateTime NgayCap { get; set; } // Ngày cấp
+
+        [NotMapped] // Exclude from database mapping
         public string CMNDCu { get; set; } = string.Empty; // Số CMND cũ
-        public string HoTen { get; set; } = string.Empty; // Họ tên
-        public string GioiTinh { get; set; } = string.Empty;// Giới tính
+
+        [NotMapped] // Exclude from database mapping
         public string QuocTich { get; set; } = "";// Quốc tịch
+
+        [NotMapped] // Exclude from database mapping
         public string DanToc { get; set; } = "";// Dân tộc
+
+        [NotMapped] // Exclude from database mapping
         public string TonGiao { get; set; } = ""; // Tôn giáo
+
+        [NotMapped] // Exclude from database mapping
         public string QueQuan { get; set; } = ""; // Quê quán
-        public string DiaChi { get; set; } = "";// Địa chỉ
+
+        [NotMapped] // Exclude from database mapping
         public string DacDiemND { get; set; } = "";// Đặc điểm ND
+
+        [NotMapped] // Exclude from database mapping
         public string Bo { get; set; } = ""; // Bố
+
+        [NotMapped] // Exclude from database mapping
         public string Me { get; set; } = "";// Mẹ
+
+        [NotMapped] // Exclude from database mapping
         public string VoChong { get; set; } = ""; // Vợ/Chồng
 
+        [NotMapped] // Exclude from database mapping
         public string Mrz { get; set; } = ""; // mdz
 
-        public DateTime CreatedAt { get; set; }
-
-        // Navigation property for InOutLogs
-        public List<InOutLog>? InOutLogs { get; set; }
     }
 
 

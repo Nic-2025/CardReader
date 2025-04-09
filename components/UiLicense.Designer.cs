@@ -64,7 +64,7 @@
             btnActive.TabIndex = 2;
             btnActive.Text = "Kích hoạt mới";
             btnActive.UseVisualStyleBackColor = false;
-            btnActive.Click += BtnActive_Click_1;
+            btnActive.Click += BtnActive_Click;
             // 
             // UiLicense
             // 

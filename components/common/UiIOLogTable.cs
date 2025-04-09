@@ -50,13 +50,13 @@ namespace IdCard.Hanel_obj.components.common
 
         private void OnLoadDone(object? sender, EventArgs e)
         {
-            //LoadData(1);
-            GenerateMockData();
-            LoadMockPagedData(1);
+            LoadData(1);
+            //GenerateMockData();
+            //LoadMockPagedData(1);
             this.uiPaginition1.OnPageChanged += (v) =>
             {
-                //this.LoadData(v);
-                this.LoadMockPagedData(v);
+                this.LoadData(v);
+                //this.LoadMockPagedData(v);
 
             };
         }

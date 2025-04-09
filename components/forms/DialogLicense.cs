@@ -24,6 +24,17 @@ namespace IdCard.Hanel_obj.components.forms
 
         private void BtnActive_Click(object sender, EventArgs e)
         {
+            if (reader.AuthReader.Instance.CardReader.SerialNumber == "")
+            {
+                MessageBox.Show(
+                    "Không thể tìm thấy thiết bị đọc thẻ. Vui lòng kiểm tra kết nối",
+                    "Error",
+                     MessageBoxButtons.OK, MessageBoxIcon.Error
+                      );
+                return;
+            }
+
+            var serial = new reader.ReaderSerial(reader.AuthReader.Instance.CardReader.SerialNumber);
             var licenseKey = txtActive.Text.Trim();
             if (string.IsNullOrEmpty(licenseKey))
             {
@@ -31,17 +42,40 @@ namespace IdCard.Hanel_obj.components.forms
                 return;
             }
 
-            var license = new auxi.License(licenseKey);
+            var license = new auxi.License(licenseKey, serial.Company, serial.Device);
             // Validate the license key
-            if (license.IsValid)
+            if (license.Status == LicenseState.Valid)
             {
                 License = license;
-                MessageBox.Show($"Kích hoạt thành công! Thời gian sử dụng đến {license.Expired:dd/MM/yyyy}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Kích hoạt thành công! Thời gian sử dụng đến {license.Expired:dd/MM/yyyy}",
+                "Thông báo",
+                 MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
+                return;
             }
-            else
+
+            if (license.Status == LicenseState.Invalid)
             {
-                MessageBox.Show("Mã kích hoạt không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Mã kích hoạt không hợp lệ!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error
+                    );
+                return;
+
+            }
+
+            if (license.Status == LicenseState.Expired)
+            {
+                MessageBox.Show("Mã kích hoạt đã hết hạn!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error
+                    );
+                return;
+            }
+            if (license.Status == LicenseState.InvalidDevice)
+            {
+                MessageBox.Show("Mã kích hoạt không hợp lệ với thiết bị này!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error
+                    );
+                return;
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using RAR.IdCard.Sdk.Reader;
 using RAR.IdCard.Sdk.Reader.HN212;
 
-namespace AuthenCard.reader
+namespace IdCard.Hanel_obj.reader
 {
     public enum CaptureResult
     {
@@ -24,7 +24,7 @@ namespace AuthenCard.reader
 
         public string Message { get; set; } = "";
 
-        public delegate void OnFrame(System.Drawing.Image? newImg);
+        public delegate void OnFrame(byte[] newImg);
         public delegate void OnResult(CaptureResult ev);
 
 
@@ -33,7 +33,7 @@ namespace AuthenCard.reader
         public event OnResult? OnResultEvent;
 
         // dotnet add package System.Drawing.Common
-        public System.Drawing.Image? Image { get; set; }
+        public Image? Image { get; set; }
 
         public VideoReader(VnHn212Reader reader)
         {
@@ -47,7 +47,7 @@ namespace AuthenCard.reader
             // Unsubscribe from the event to avoid memory leaks
             if (_reader != null)
             {
-                this.StopCapture();
+                StopCapture();
 
                 _reader.StopFaceCapture();
                 _reader.OnVideoFrame -= OnEvent;
@@ -58,8 +58,8 @@ namespace AuthenCard.reader
         {
             if (e is not CaptureEventArgs vd)
                 return;
-            this.FaceType = vd.FaceType;
-            this.FaceImage = vd.FaceData;
+            FaceType = vd.FaceType;
+            FaceImage = vd.FaceData;
 
 
             switch (vd.Status)
@@ -69,9 +69,11 @@ namespace AuthenCard.reader
                         try
                         {
                             //Display video on form
-                            using var ms = new MemoryStream(vd.FrameData);
-                            Image = Image.FromStream(ms);
-                            OnUpdateFrameEvent?.Invoke(Image);
+                            // using var ms = new MemoryStream(vd.FrameData);
+                            // Image = Image.FromStream(ms);
+                            // OnUpdateFrameEvent?.Invoke(Image);
+
+                            OnUpdateFrameEvent?.Invoke(vd.FrameData);
                         }
                         catch (Exception) { }
                     }
@@ -81,7 +83,7 @@ namespace AuthenCard.reader
                         Status = FACE_CAPTURE_STATAUS.FAILURE;
                         Message = $"Error: " + vd.Message;
 
-                        this.OnResultEvent?.Invoke(CaptureResult.FAILURE);
+                        OnResultEvent?.Invoke(CaptureResult.FAILURE);
                         //Close this form
                         // this.Close();
                     }
@@ -90,7 +92,7 @@ namespace AuthenCard.reader
                     {
                         Status = FACE_CAPTURE_STATAUS.SUCCESS;
                         Message = $"FaceCapture success";
-                        this.OnResultEvent?.Invoke(CaptureResult.SUCCESS);
+                        OnResultEvent?.Invoke(CaptureResult.SUCCESS);
                         //Close this form
                         // this.Close();
                     }
@@ -99,7 +101,7 @@ namespace AuthenCard.reader
                     {
                         Status = FACE_CAPTURE_STATAUS.IGNORE;
                         Message = vd.Message;
-                        this.OnResultEvent?.Invoke(CaptureResult.IGNORE);
+                        OnResultEvent?.Invoke(CaptureResult.IGNORE);
                         //Close this form
                         // this.Close();
                     }
@@ -129,7 +131,7 @@ namespace AuthenCard.reader
             _reader.FaceCaptureCamId = camPath;
 
 
-            _reader.OnVideoFrame += this.OnEvent;
+            _reader.OnVideoFrame += OnEvent;
             _reader.StartFaceCapture();
         }
 

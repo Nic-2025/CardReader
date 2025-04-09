@@ -1,6 +1,7 @@
-﻿
-using IdCard.Hanel.Models;
+﻿using IdCard.Hanel.Models;
+using IdCard.Hanel_obj.auxi;
 using IdCard.Hanel_obj.forms;
+using IdCard.Hanel_obj.reader;
 using System.ComponentModel;
 
 namespace IdCard.Hanel_obj.components.forms
@@ -21,32 +22,31 @@ namespace IdCard.Hanel_obj.components.forms
     {
         readonly UiAuthen _authComponent = new();
         ContentType _currentContentType = ContentType.None;
+
         User? _user;
         UserControl? _userControl;
 
-        //public auxi.License _license = new();
+        public auxi.License? _license;
 
         public MonitorForm()
         {
             InitializeComponent();
 
-
             this.StartPosition = FormStartPosition.CenterScreen;
             this.WindowState = FormWindowState.Maximized;
 
-            //pnAuth.Controls.Add(_authComponent);
+            pnAuth.Controls.Add(_authComponent);
+            pnAuth.Width = 10;
+            _authComponent.OnBegin += HandleAuthBegin;
             _authComponent.OnDone += HandleAuthDone;
 
 
             OnChangeContentType(ContentType.None);
 
-            // Attach the Load event
-            Load += MonitorForm_Load;
 
-            // Attach the FormClosing event
-            FormClosing += MonitorForm_FormClosing;
+            Load += MonitorForm_Load; // Attach the Load event
+            FormClosing += MonitorForm_FormClosing;             // Attach the FormClosing event
         }
-
 
         private async void MonitorForm_Load(object? sender, EventArgs e)
         {
@@ -60,15 +60,16 @@ namespace IdCard.Hanel_obj.components.forms
             formLogin.ShowDialog();
             _user = formLogin.User;
 
-            //if (!_license.IsValid)
-            //{
-            //    MessageBox.Show("License is not valid. Please activate your license.", "License Error");
-            //    OnChangeContentType(ContentType.License);
-            //    return;
-            //}
-
-            OnChangeContentType(ContentType.DailyLogbook);
-
+            if (AuthReader.Instance.CardReader.SerialNumber == "")
+            {
+                MessageBox.Show("Không thể tìm thấy thiết bị đọc thẻ. Vui lòng kiểm tra kết nối", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AuthReader.Instance.CardReader.OnDetectDevice += OnSerialNumber;
+            }
+            else
+            {
+                OnSerialNumber(new ReaderSerial(AuthReader.Instance.CardReader.SerialNumber));
+            }
         }
 
         private void MonitorForm_FormClosing(object? sender, FormClosingEventArgs e)
@@ -79,20 +80,30 @@ namespace IdCard.Hanel_obj.components.forms
                                          "Confirm Exit",
                                          MessageBoxButtons.YesNo,
                                          MessageBoxIcon.Question);
-
             if (result == DialogResult.No)
-            {
                 e.Cancel = true; // Cancel the close operation
+            else
+                _authComponent.Close();
+        }
+
+        private void OnSerialNumber(ReaderSerial serial)
+        {
+            AuthReader.Instance.CardReader.OnDetectDevice -= OnSerialNumber;
+            _license = new(serial.Company, serial.Device);
+            if (_license.Status == LicenseState.Valid)
+            {
+                OnChangeContentType(ContentType.DailyLogbook);
             }
             else
             {
-                _authComponent.Close();
+                MessageBox.Show("License is not valid. Please activate your license.", "License Error");
+                OnChangeContentType(ContentType.License);
             }
         }
 
         private void OnChangeContentType(ContentType newType)
         {
-            //if (!_license.IsValid)
+            //if (_license.Status != LicenseState.Valid)
             //{
             //    newType = ContentType.License;
             //}
@@ -116,15 +127,17 @@ namespace IdCard.Hanel_obj.components.forms
                     HandleChange(new UiFormThongTin());
                     break;
                 case ContentType.ChangePwd:
-                    var newCtrl = new UiChangePwd();
-                    newCtrl.CurrentUser = _user;
+                    var newCtrl = new UiChangePwd
+                    {
+                        CurrentUser = _user
+                    };
                     HandleChange(newCtrl);
                     break;
-                //case ContentType.License:
-                //    var newCtrlLicense = new UiLicense();
-                //    //newCtrlLicense.OnActive += HandleLicenseActive;
-                //    HandleChange(newCtrlLicense);
-                //    break;
+                case ContentType.License:
+                    var newCtrlLicense = new UiLicense();
+                    newCtrlLicense.OnActive += HandleLicenseActive;
+                    HandleChange(newCtrlLicense);
+                    break;
                 case ContentType.About:
                     HandleChange(new UiAbout());
                     break;
@@ -139,7 +152,7 @@ namespace IdCard.Hanel_obj.components.forms
             pnContentWrapper.Controls.Clear();
             pnContent.AutoScroll = true;
 
-            pnContentWrapper.Size = new Size(pnContent.Width -16 , 1500);
+            pnContentWrapper.Size = new Size(pnContent.Width - 16, 1500);
             pnContentWrapper.Location = new Point(0, 0);
             pnContentWrapper.Padding = new Padding(16);
 
@@ -192,11 +205,18 @@ namespace IdCard.Hanel_obj.components.forms
             OnChangeContentType(ContentType.About);
         }
 
+        private void HandleAuthBegin()
+        {
+            pnAuth.Width = 700;
+            pnAuth.Location = new Point(pnContent.Width / 2 - pnAuth.Width / 2, pnContent.Height / 2 - pnAuth.Height / 2);
+        }
+
         private void HandleAuthDone(InOutLog newLog)
         {
             if (_userControl != null && _userControl is UiDailyLogbook dlb)
             {
                 dlb.Reload();
+                pnAuth.Width = 10;
             }
         }
 
@@ -204,7 +224,7 @@ namespace IdCard.Hanel_obj.components.forms
         private void HandleLicenseActive(auxi.License license)
         {
             //_license = license;
-            if (license.IsValid)
+            if (license.Status == auxi.LicenseState.Valid)
             {
                 OnChangeContentType(ContentType.DailyLogbook);
             }
@@ -215,28 +235,7 @@ namespace IdCard.Hanel_obj.components.forms
 
         }
 
-        private void pnNav_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pnContent_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void MonitorForm_Resize(object? sender, EventArgs e)
+        private void MonitorForm_Resize(object? sender, EventArgs? e)
         {
             int totalWidth = this.ClientSize.Width;
             int navWidth = totalWidth * 2 / 12;
@@ -249,8 +248,6 @@ namespace IdCard.Hanel_obj.components.forms
             pnContent.Width = contentWidth;
             pnContent.Height = this.ClientSize.Height;
             pnContent.Location = new Point(navWidth, 0);
-
-
 
             int padding = 8; // hoặc 0 nếu không cần khoảng cách hai bên
             int btnWidth = pnNav.ClientSize.Width - padding * 2;
@@ -279,6 +276,6 @@ namespace IdCard.Hanel_obj.components.forms
 
         }
 
-  
+
     }
 }

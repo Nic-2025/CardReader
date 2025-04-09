@@ -152,6 +152,7 @@ namespace IdCard.Hanel
             if (ev == null)
                 return;
             WriteLog($"----> [{DateTime.Now.ToString("HH:mm:ss")}] Device {ev.ReaderSerialNumber} change stated from: {ev.LastState} to: {ev.NewState}.");
+
             lbReaderStatus.Text = (ev.NewState == READER_STATUS.ADDED) ? $"{ev.ReaderSerialNumber}" : "Không có";
             lbReaderStatus.ForeColor = (ev.NewState == READER_STATUS.ADDED) ? Color.Blue : Color.Red;
         }

@@ -1,34 +1,32 @@
 ﻿using RAR.IdCard.Sdk.Reader.HN212;
-namespace AuthenCard.reader
+
+namespace IdCard.Hanel_obj.reader
 {
     public class AuthReader
     {
+        private static readonly Lazy<AuthReader> _instance = new(() => new AuthReader());
+        public static AuthReader Instance => _instance.Value;
+
         public VnHn212Reader Reader = new();
         public CardReader CardReader { get; }
-
-
         public VideoReader VideoReader { get; }
 
-        public AuthReader()
+        private AuthReader()
         {
             CardReader = new CardReader(Reader);
             VideoReader = new VideoReader(Reader);
-
             InitReader();
         }
 
-
         public void Close()
         {
-            this.Reader.StopMonitor();
+            Reader.StopMonitor();
         }
 
         private void InitReader()
         {
-
             //Reader.OnStatusChanged += OnStatusChanged;
             //_reader.OnVideoFrame += OnVideoFrame;
-
 
             // var config = new VnPcscsConfig();
             var config = new VnHn212Config
@@ -62,12 +60,15 @@ namespace AuthenCard.reader
                 CaptureFaceUseFirstCamAvaiable = true,
 
                 MonitorQRReaderDevice = true,
-
             };
 
             /*Start reader monitoring ...*/
             Reader.StartMonitor(config);
         }
 
+        public int CompareFace(byte[] img1, byte[] img2)
+        {
+            return Reader.CompareFace(img1, img2);
+        }
     }
 }

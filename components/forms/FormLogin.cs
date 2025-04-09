@@ -1,13 +1,5 @@
 ﻿using IdCard.Hanel.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace IdCard.Hanel_obj.components.forms
 {
@@ -15,14 +7,23 @@ namespace IdCard.Hanel_obj.components.forms
     {
         private readonly UserRepository _userRepository = new(AuthenCardDbContext.Instance);
 
-
         public User? User { get; set; }
-
 
         public FormLogin()
         {
             InitializeComponent();
         }
+
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        const int CS_NOCLOSE = 0x200;
+        //        CreateParams cp = base.CreateParams;
+        //        cp.ClassStyle |= CS_NOCLOSE;
+        //        return cp;
+        //    }
+        //}
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
@@ -45,14 +46,8 @@ namespace IdCard.Hanel_obj.components.forms
 
         }
 
-        private void txtUsername_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

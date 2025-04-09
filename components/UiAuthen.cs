@@ -1,8 +1,7 @@
-﻿using AuthenCard.reader;
-using RAR.IdCard.Sdk.Reader;
+﻿using RAR.IdCard.Sdk.Reader;
 using IdCard.Hanel.Models;
 using IdCard.Hanel_obj.components.common;
-using Accessibility;
+using IdCard.Hanel_obj.reader;
 
 namespace IdCard.Hanel_obj.forms
 {
@@ -10,15 +9,21 @@ namespace IdCard.Hanel_obj.forms
     {
         private Customer? _customer = null;
         private InOutLog? _currentLog = null;
+        private byte[]? _currentFrame = null;
+        private byte[]? _cardImage = null;
 
-        private readonly AuthReader _reader = new();
+
+
+        private readonly AuthReader _reader = AuthReader.Instance;
         private readonly InOutLogRepository _ioRepo = new(AuthenCardDbContext.Instance);
         private readonly CustomerRepository _ctmRepo = new(AuthenCardDbContext.Instance);
 
         private readonly AdditionFieldRepository _fielsRepo = new(AuthenCardDbContext.Instance);
 
+        public delegate void HandleBeginEvent();
         public delegate void HandleDoneEvent(InOutLog newLog);
 
+        public event HandleBeginEvent? OnBegin;
         public event HandleDoneEvent? OnDone;
 
         public string ImagePath { set; get; } = "./data/images";
@@ -49,26 +54,76 @@ namespace IdCard.Hanel_obj.forms
             _reader.VideoReader.OnResultEvent += OnResultCamera;
         }
 
+        private void OnUpdateFrame(byte[] frame)
+        {
+            using var ms = new MemoryStream(frame);
+            pImage.SizeMode = PictureBoxSizeMode.Zoom; // Ensure the image fits the PictureBox
+            pImage.Image = Image.FromStream(ms);
+            _currentFrame = frame;
+
+            // if (newImg != null)
+            // {
+            //     using var ms = new MemoryStream();
+            //     newImg.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            //     _currentFrame = ms.ToArray();
+            // }
+        }
+
         private void OnResultCamera(CaptureResult ev)
         {
             _reader.VideoReader.StopCapture();
-
             Invoke(new Action(() =>
             {
                 if (ev != CaptureResult.SUCCESS)
                 {
                     MessageBox.Show("Verify camera error. Try again");
                     _reader.VideoReader.StartCapture();
+                    return;
                 }
-                else
-                    _verifyImage.IsVerified = true;
-            }));
-        }
 
-        private void OnUpdateFrame(Image? newImg)
-        {
-            pImage.SizeMode = PictureBoxSizeMode.Zoom; // Ensure the image fits the PictureBox
-            pImage.Image = newImg;
+                if (_cardImage == null)
+                {
+                    MessageBox.Show("Vui lòng chụp ảnh và đọc thẻ chip trước!", "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (_currentFrame == null)
+                {
+                    MessageBox.Show("Camera có vấn đề", "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                try
+                {
+                    int score = _reader.CompareFace(_cardImage, _currentFrame);
+                    var matched = score >= 50;
+                    if (matched)
+                    {
+                        _verifyImage.IsVerified = true;
+                    }
+                    else
+                    {
+                        var result = MessageBox.Show(
+                            "Ảnh chứng minh và mặt không khớp. Bạn có muốn thử lại không?",
+                            "Thông báo lỗi",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (result == DialogResult.Yes)
+                        {
+                            _verifyImage.IsVerified = false;
+                            _reader.VideoReader.StartCapture();
+                        }
+                        else
+                        {
+                            _verifyImage.IsVerified = false;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi: " + ex.Message, "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }));
         }
 
         private void OnReadDone(Customer? customer)
@@ -95,18 +150,19 @@ namespace IdCard.Hanel_obj.forms
                 ResetState();
                 CreateFormComponent(_fielsRepo.GetList());
                 Show();
+                this.OnBegin?.Invoke();
             }));
         }
 
         private void SetCustomer(Customer customer)
         {
+            _cardImage = customer.HinhAnh;
             _customer = customer;
             _customer.CreatedAt = DateTime.Now;
             _verifyCard.IsVerified = true;
             _cbManual.Visible = true;
 
             _customer = _ctmRepo.FirstOrDefault(customer.Id, customer);
-
             lbHoTenVal.Text = customer.HoTen;
             lbCCCDVal.Text = customer.Id;
         }
@@ -135,7 +191,7 @@ namespace IdCard.Hanel_obj.forms
             }
             else
             {
-                MessageBox.Show("No image to save.");
+                // MessageBox.Show("No image to save.");
             }
         }
 
@@ -200,7 +256,6 @@ namespace IdCard.Hanel_obj.forms
 
             UpdateForm();
         }
-
 
         private void BtnSave_Click(object sender, EventArgs e)
         {

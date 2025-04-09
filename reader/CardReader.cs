@@ -3,23 +3,62 @@ using RAR.IdCard.Sdk.Reader;
 using RAR.IdCard.Sdk.Reader.HN212;
 
 
-namespace AuthenCard
+namespace IdCard.Hanel_obj.reader
 {
+
+    public class ReaderSerial
+    {
+        public ushort Company { get; set; } = 0;
+        public uint Device { get; set; } = 0;
+
+        public ReaderSerial(ushort company, uint device)
+        {
+            Company = company;
+            Device = device;
+        }
+
+        public ReaderSerial(string serialNumber)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(serialNumber) || serialNumber.Length < 2)
+                    return;
+
+                var part = serialNumber.Split("-");
+                var latestPart = part[part.Length - 1];
+
+                if (latestPart.Length < 2)
+                    return;
+
+                Company = ushort.Parse(latestPart[..2]);
+                Device = uint.Parse(latestPart[2..]);
+            }
+            catch
+            {
+
+            }
+        }
+    }
+
     public class CardReader
     {
         //VnHn212Reader _reader = new VnHn212Reader; //Tạo object
 
+        private readonly VnHn212Reader _reader;
 
-        VnHn212Reader _reader;
+        public delegate void CardInEvent(StatusEventCardArgs ev);
 
-        public delegate void OnCard(StatusEventCardArgs ev);
+        public delegate void ReadCardDoneEvent(Customer? customer);
 
-        public delegate void OnCustomer(Customer? customer);
+        public delegate void DetectDeviceEvent(ReaderSerial serial);
 
+        public string SerialNumber { get; private set; } = "";
 
-        public event OnCard? OnCardIn;
+        public event CardInEvent? OnCardIn;
 
-        public event OnCustomer? OnReadCardDone;
+        public event ReadCardDoneEvent? OnReadCardDone;
+        public event DetectDeviceEvent? OnDetectDevice;
 
         public CardReader(VnHn212Reader reader)
         {
@@ -27,11 +66,10 @@ namespace AuthenCard
             _reader.OnStatusChanged += OnStatusChanged;
         }
 
-
         public void OnStatusChanged(object sender, StatusEventArgs e)
         {
             Console.WriteLine("On status change");
-            this.OnEvent(sender, e);
+            OnEvent(sender, e);
         }
 
         public void OnVideoFrame(object sender, StatusEventArgs e)
@@ -44,7 +82,7 @@ namespace AuthenCard
             switch (e.EventName)
             {
                 case EVENT_NAMES.READER:
-                    //ProcessReaderEvent(e as StatusEventReaderArgs);
+                    ProcessReaderEvent(e as StatusEventReaderArgs);
                     //Console.WriteLine("On status change:READER");
                     break;
                 case EVENT_NAMES.CARD:
@@ -67,6 +105,13 @@ namespace AuthenCard
             }
         }
 
+        private void ProcessReaderEvent(StatusEventReaderArgs? ev)
+        {
+            if (ev == null)
+                return;
+            SerialNumber = ev.ReaderSerialNumber;
+            this.OnDetectDevice?.Invoke(new ReaderSerial(ev.ReaderSerialNumber));
+        }
 
         private void ProcessCardEvent(StatusEventCardArgs? ev)
         {
@@ -88,7 +133,6 @@ namespace AuthenCard
             }
         }
 
-
         private void OnReadCardFinish(StatusEventReadArgs ev)
         {
             //Show data
@@ -99,12 +143,14 @@ namespace AuthenCard
             }
         }
 
-
         private Customer GetCustomer()
         {
             var dob = DateTime.TryParseExact(_reader.CardData.Dg13File.DateOfBirth, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out var ngaySinh) ? ngaySinh : default;
             var issueDate = DateTime.TryParseExact(_reader.CardData.Dg13File.IssueDate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out var ngayCap) ? ngayCap : default;
             var expiredDate = DateTime.TryParseExact(_reader.CardData.Dg13File.ExpiredDate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out var ngayHetHan) ? ngayHetHan : default;
+
+            var faceStr = _reader.CardData.Dg2File.FaceImage;
+            var chipFaceBase64 = faceStr[(faceStr.IndexOf(',') + 1)..];
 
             //Personal info
             var ctm = new Customer
@@ -113,6 +159,7 @@ namespace AuthenCard
                 NgaySinh = dob,
                 NgayCap = issueDate,
                 NgayHetHan = expiredDate,
+                HinhAnh = Convert.FromBase64String(chipFaceBase64),
                 CMNDCu = _reader.CardData.Dg13File.PreviousNumber ?? "",
                 HoTen = _reader.CardData.Dg13File.Name ?? "",
                 GioiTinh = _reader.CardData.Dg13File.Sex ?? "",
@@ -131,7 +178,6 @@ namespace AuthenCard
             return ctm;
         }
 
-
         private void ProcessReadEvent(StatusEventReadArgs? ev)
         {
             try
@@ -141,7 +187,7 @@ namespace AuthenCard
                 switch (ev.Step)
                 {
                     case READ_CARD_STEPS.SCANCARD:
-                        OnScancardEvent(ev);
+                        // OnScanCardEvent(ev);
                         break;
                     case READ_CARD_STEPS.START:
                     case READ_CARD_STEPS.CONNECT_CARD:
@@ -162,9 +208,9 @@ namespace AuthenCard
         }
 
 
-        private void OnScancardEvent(StatusEventReadArgs ev)
-        {
-        }
+        // private void OnScanCardEvent(StatusEventReadArgs ev)
+        // {
+        // }
 
     }
 }

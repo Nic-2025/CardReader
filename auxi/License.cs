@@ -5,6 +5,13 @@ using System.Text;
 
 namespace IdCard.Hanel_obj.auxi
 {
+    public enum LicenseState
+    {
+        Valid = 0,
+        Invalid = -1,
+        InvalidDevice = -2,
+        Expired = -10,
+    }
 
     public static class LicenseUtils
     {
@@ -13,13 +20,40 @@ namespace IdCard.Hanel_obj.auxi
         public const string AesKeyHex = "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4";
         public const string PublicKeyBase64 = "1lB4WvgA10UDuy98WNnf9A==";
 
-        public static bool ValidateLicense(string licenseHex, string publicKeyBase64, out DateTime expired)
-        {
-            expired = DateTime.MinValue; // Initialize expired to a default value
+        // public static bool ValidateLicense(string licenseHex, string publicKeyBase64, out DateTime expired)
+        // {
+        //     expired = DateTime.MinValue; // Initialize expired to a default value
 
+        //     var licenseBytes = Convert.FromHexString(licenseHex);
+        //     var data = new byte[16];
+        //     var signature = new byte[8];
+
+        //     Array.Copy(licenseBytes, 0, data, 0, 16);
+        //     Array.Copy(licenseBytes, 16, signature, 0, 8);
+
+        //     var key = Convert.FromBase64String(publicKeyBase64);
+        //     using var hmac = new HMACSHA256(key);
+        //     var computedSignature = hmac.ComputeHash(data.ToArray()).Take(8).ToArray();
+
+        //     if (!computedSignature.SequenceEqual(signature))
+        //         return false;
+
+        //     uint packedValue = BitConverter.ToUInt32(data, 12); // Convert byte array to uint
+        //     int unpackedX = (int)(packedValue >> 24); // Extract the year value
+        //     int unpackedY = (int)((packedValue >> 16) & 0xFF); // Extract the month value
+        //     int unpackedZ = (int)((packedValue >> 8) & 0xFF); // Extract the day value
+
+        //     expired = new DateTime(unpackedX + 2024, unpackedY, unpackedZ);
+
+        //     return expired >= DateTime.Now;
+        // }
+
+        public static LicenseState ValidateLicense(string licenseHex, string publicKeyBase64, ushort companyCode, uint deviceCode, out DateTime expired)
+        {
             var licenseBytes = Convert.FromHexString(licenseHex);
             var data = new byte[16];
             var signature = new byte[8];
+            expired = DateTime.MinValue; // Initialize expired to a default value
 
             Array.Copy(licenseBytes, 0, data, 0, 16);
             Array.Copy(licenseBytes, 16, signature, 0, 8);
@@ -29,7 +63,13 @@ namespace IdCard.Hanel_obj.auxi
             var computedSignature = hmac.ComputeHash(data.ToArray()).Take(8).ToArray();
 
             if (!computedSignature.SequenceEqual(signature))
-                return false;
+                return LicenseState.Invalid;
+
+            ushort unpackCompanyCode = BitConverter.ToUInt16(data, 1); // Convert byte array to uint
+            uint unpackDeviceCode = BitConverter.ToUInt32(data, 3); // Convert byte array to uint
+
+            if (unpackCompanyCode != companyCode || unpackDeviceCode != deviceCode) // Check company code and device code
+                return LicenseState.InvalidDevice;
 
             uint packedValue = BitConverter.ToUInt32(data, 12); // Convert byte array to uint
             int unpackedX = (int)(packedValue >> 24); // Extract the year value
@@ -38,7 +78,7 @@ namespace IdCard.Hanel_obj.auxi
 
             expired = new DateTime(unpackedX + 2024, unpackedY, unpackedZ);
 
-            return expired >= DateTime.Now;
+            return expired >= DateTime.Now ? LicenseState.Valid : LicenseState.Expired;
         }
 
         public static void SaveLicenseToFile(string licenseHex, string aesKeyHex)
@@ -79,45 +119,45 @@ namespace IdCard.Hanel_obj.auxi
 
     public class License
     {
-        public bool IsValid { get; } = false;
+        public LicenseState Status { get; } = LicenseState.Invalid;
 
         public DateTime Expired { get; } = DateTime.MinValue;
 
         public string LicenseHex { get; }
 
-        public License()
+        public License(ushort companyCode, uint deviceCode)
         {
             try
             {
-                //"0121DCE36900D055A7F52044EE0D07016E435135D4189A95"
+                // 02420004000000A6EEF727D1EE090402D16051F0CB8FB69F
                 if (File.Exists(LicenseUtils.LicensePath))
                 {
                     LicenseHex = LicenseUtils.LoadLicenseFromFile(LicenseUtils.AesKeyHex);
-                    IsValid = LicenseUtils.ValidateLicense(LicenseHex, LicenseUtils.PublicKeyBase64, out DateTime expired);
+                    Status = LicenseUtils.ValidateLicense(LicenseHex, LicenseUtils.PublicKeyBase64, companyCode, deviceCode, out DateTime expired);
                     Expired = expired;
                 }
                 else
                 {
                     LicenseHex = string.Empty;
-                    IsValid = false;
+                    Status = LicenseState.Invalid;
                 }
             }
             catch
             {
                 LicenseHex = string.Empty;
-                IsValid = false;
+                Status = LicenseState.Invalid;
             }
         }
 
-        public License(string license)
+        public License(string license, ushort companyCode, uint deviceCode)
         {
             try
             {
                 LicenseHex = license;
-                //"0121DCE36900D055A7F52044EE0D07016E435135D4189A95"
-                IsValid = LicenseUtils.ValidateLicense(LicenseHex, LicenseUtils.PublicKeyBase64, out DateTime expired);
+                // 02420004000000A6EEF727D1EE090402D16051F0CB8FB69F
+                Status = LicenseUtils.ValidateLicense(LicenseHex, LicenseUtils.PublicKeyBase64, companyCode, deviceCode, out DateTime expired);
                 Expired = expired;
-                if (IsValid)
+                if (Status == LicenseState.Valid)
                 {
                     LicenseUtils.SaveLicenseToFile(license, LicenseUtils.AesKeyHex);
                 }
@@ -125,9 +165,8 @@ namespace IdCard.Hanel_obj.auxi
             catch
             {
                 LicenseHex = string.Empty;
-                IsValid = false;
+                Status = LicenseState.Invalid;
             }
         }
-
     }
 }

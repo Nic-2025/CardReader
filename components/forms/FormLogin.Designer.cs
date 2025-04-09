@@ -67,7 +67,6 @@
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(368, 32);
             txtUsername.TabIndex = 0;
-            txtUsername.TextChanged += txtUsername_TextChanged;
             // 
             // label1
             // 
