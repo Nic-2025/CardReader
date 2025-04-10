@@ -2,6 +2,7 @@
 using IdCard.Hanel.Models;
 using IdCard.Hanel_obj.components.common;
 using IdCard.Hanel_obj.reader;
+using IdCard.Hanel_obj.auxi;
 
 namespace IdCard.Hanel_obj.forms
 {
@@ -26,7 +27,7 @@ namespace IdCard.Hanel_obj.forms
         public event HandleBeginEvent? OnBegin;
         public event HandleDoneEvent? OnDone;
 
-        public string ImagePath { set; get; } = "./data/images";
+        public string ImagePath { set; get; } = AppConfig.Instance.GetImagePath();
 
         public UiAuthen()
         {
