@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
+using IdCard.Hanel_obj.auxi;
 
 namespace IdCard.Hanel.Models
 {
@@ -18,8 +19,9 @@ namespace IdCard.Hanel.Models
                     {
                         if (_instance == null)
                         {
+                            var databasePath = AppConfig.Instance.GetDatabasePath();
                             var options = new DbContextOptionsBuilder<AuthenCardDbContext>()
-                                .UseSqlite($@"Data Source={AppDomain.CurrentDomain.BaseDirectory}\authenCard.db")
+                                .UseSqlite($"Data Source={databasePath}")
                                 .Options;
                             _instance = new AuthenCardDbContext(options);
 
@@ -47,7 +49,11 @@ namespace IdCard.Hanel.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=authencard.db");
+            if (!optionsBuilder.IsConfigured)
+            {
+                var databasePath = AppConfig.Instance.GetDatabasePath();
+                optionsBuilder.UseSqlite($"Data Source={databasePath}");
+            }
         }
 
         private void EnsureDatabaseUpdated()

@@ -31,7 +31,7 @@ namespace IdCard.Hanel.Models
             {
                 return _context.Users.First(u => u.Username == username && u.Password == password);
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

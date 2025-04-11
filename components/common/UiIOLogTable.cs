@@ -38,7 +38,9 @@ namespace IdCard.Hanel_obj.components.common
             dgvLogIO.ReadOnly = true;
             dgvLogIO.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvLogIO.CellClick += DgvLogIO_ViewDetail;
+#pragma warning disable CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
             dgvLogIO.CellPainting += dgvLogIO_CellPainting;
+#pragma warning restore CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
             dgvLogIO.CellMouseMove += dgvLogIO_CellMouseMove;
 
 
