@@ -314,8 +314,9 @@ namespace IdCard.Hanel_obj.forms
                     var val = uiField.GetValue();
                     if (val == "" && uiField.Field.Require)
                     {
-                        MessageBox.Show($"Trường dữ liệu {uiField.Field.Label} bắt buộc phải điền");
-                        return null;
+                        //MessageBox.Show($"Trường dữ liệu {uiField.Field.Label} bắt buộc phải điền");
+                        //return null;
+                        values[fieldName] = "";
                     }
                     values[fieldName] = val;
                 }

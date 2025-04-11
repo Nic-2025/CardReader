@@ -38,8 +38,8 @@ namespace IdCard.Hanel_obj.components
             string formatted = $"{weekdays[(int)now.DayOfWeek]}, {now:dd/MM/yyyy}";
             date.Text = formatted;
 
-            //LoadData(1);
-            GenerateMockData();
+            LoadData(1);
+            //GenerateMockData();
             uiPaginition1.OnPageChanged += OnPageChange;
         }
 

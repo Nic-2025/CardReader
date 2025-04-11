@@ -42,6 +42,7 @@ namespace IdCard.Hanel.Models
 
         private AuthenCardDbContext(DbContextOptions<AuthenCardDbContext> options) : base(options) { }
 
+
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<InOutLog> InOutLogs { get; set; } = null!;
         public DbSet<Customer> Customer { get; set; } = null!;
@@ -86,7 +87,7 @@ namespace IdCard.Hanel.Models
                 Users.Add(new User
                 {
                     Username = "admin",
-                    Password = "matkhau@admin", // Default password (should be hashed in a real application)
+                    Password = "admin", // Default password (should be hashed in a real application)
                 });
                 SaveChanges();
             }

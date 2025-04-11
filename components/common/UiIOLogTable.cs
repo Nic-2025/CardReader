@@ -86,24 +86,23 @@ namespace IdCard.Hanel_obj.components.common
         private void SetFrom(DateTime? value)
         {
             _from = value;
-            //this.LoadData(1);
-            this.LoadMockPagedData(1);
+            this.LoadData(1);
         }
 
 
         private void SetTo(DateTime? value)
         {
             _to = value;
-            //this.LoadData(1);
-            this.LoadMockPagedData(1);
+            this.LoadData(1);
+            //this.LoadMockPagedData(1);
         }
 
 
         private void SetStatus(IOStatus? value)
         {
             _status = value;
-            //this.LoadData(1);
-            this.LoadMockPagedData(1);
+            this.LoadData(1);
+            //this.LoadMockPagedData(1);
 
         }
 

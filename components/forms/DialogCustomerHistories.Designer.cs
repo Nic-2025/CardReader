@@ -67,10 +67,9 @@ namespace IdCard.Hanel_obj.components.forms
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 10.5F);
-            label5.Location = new Point(244, 48);
-            label5.Margin = new Padding(2, 0, 2, 0);
+            label5.Location = new Point(349, 80);
             label5.Name = "label5";
-            label5.Size = new Size(46, 19);
+            label5.Size = new Size(65, 30);
             label5.TabIndex = 0;
             label5.Text = "CCCD";
             // 
@@ -78,10 +77,9 @@ namespace IdCard.Hanel_obj.components.forms
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(14, 9);
-            label3.Margin = new Padding(2, 0, 2, 0);
+            label3.Location = new Point(20, 15);
             label3.Name = "label3";
-            label3.Size = new Size(199, 30);
+            label3.Size = new Size(290, 45);
             label3.TabIndex = 0;
             label3.Text = "Thông tin cá nhân";
             label3.Click += label3_Click;
@@ -90,10 +88,9 @@ namespace IdCard.Hanel_obj.components.forms
             // 
             _lbCCCDVal.AutoSize = true;
             _lbCCCDVal.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
-            _lbCCCDVal.Location = new Point(244, 76);
-            _lbCCCDVal.Margin = new Padding(2, 0, 2, 0);
+            _lbCCCDVal.Location = new Point(349, 127);
             _lbCCCDVal.Name = "_lbCCCDVal";
-            _lbCCCDVal.Size = new Size(129, 19);
+            _lbCCCDVal.Size = new Size(193, 30);
             _lbCCCDVal.TabIndex = 0;
             _lbCCCDVal.Text = "051454545454654";
             // 
@@ -101,10 +98,9 @@ namespace IdCard.Hanel_obj.components.forms
             // 
             _lbHoTenVal.AutoSize = true;
             _lbHoTenVal.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
-            _lbHoTenVal.Location = new Point(14, 76);
-            _lbHoTenVal.Margin = new Padding(2, 0, 2, 0);
+            _lbHoTenVal.Location = new Point(20, 127);
             _lbHoTenVal.Name = "_lbHoTenVal";
-            _lbHoTenVal.Size = new Size(168, 19);
+            _lbHoTenVal.Size = new Size(255, 30);
             _lbHoTenVal.TabIndex = 0;
             _lbHoTenVal.Text = "Nguyễn Ngọc Minh Anh";
             // 
@@ -112,10 +108,9 @@ namespace IdCard.Hanel_obj.components.forms
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.5F);
-            label1.Location = new Point(14, 48);
-            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.Location = new Point(20, 80);
             label1.Name = "label1";
-            label1.Size = new Size(69, 19);
+            label1.Size = new Size(103, 30);
             label1.TabIndex = 0;
             label1.Text = "Họ và tên";
             // 
@@ -148,8 +143,7 @@ namespace IdCard.Hanel_obj.components.forms
             dgvHistories.Dock = DockStyle.Fill;
             dgvHistories.EnableHeadersVisualStyles = false;
             dgvHistories.GridColor = Color.FromArgb(234, 236, 240);
-            dgvHistories.Location = new Point(16, 51);
-            dgvHistories.Margin = new Padding(2);
+            dgvHistories.Location = new Point(23, 85);
             dgvHistories.Name = "dgvHistories";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.White;
@@ -162,7 +156,7 @@ namespace IdCard.Hanel_obj.components.forms
             dgvHistories.RowHeadersVisible = false;
             dgvHistories.RowHeadersWidth = 62;
             dgvHistories.RowTemplate.Height = 57;
-            dgvHistories.Size = new Size(1278, 359);
+            dgvHistories.Size = new Size(1825, 598);
             dgvHistories.TabIndex = 0;
             dgvHistories.CellContentClick += dgvHistories_CellContentClick;
             // 
@@ -191,9 +185,10 @@ namespace IdCard.Hanel_obj.components.forms
             panel1.Controls.Add(panel2);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(4, 5, 4, 5);
             panel1.Name = "panel1";
-            panel1.Padding = new Padding(16);
-            panel1.Size = new Size(1342, 637);
+            panel1.Padding = new Padding(23, 27, 23, 27);
+            panel1.Size = new Size(1917, 1062);
             panel1.TabIndex = 2;
             // 
             // panel4
@@ -202,9 +197,10 @@ namespace IdCard.Hanel_obj.components.forms
             panel4.Controls.Add(panel8);
             panel4.Controls.Add(panel5);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(16, 187);
+            panel4.Location = new Point(23, 312);
+            panel4.Margin = new Padding(4, 5, 4, 5);
             panel4.Name = "panel4";
-            panel4.Size = new Size(1310, 434);
+            panel4.Size = new Size(1871, 723);
             panel4.TabIndex = 6;
             panel4.Paint += panel4_Paint;
             // 
@@ -213,10 +209,11 @@ namespace IdCard.Hanel_obj.components.forms
             panel8.Controls.Add(dgvHistories);
             panel8.Controls.Add(panel7);
             panel8.Dock = DockStyle.Fill;
-            panel8.Location = new Point(0, 24);
+            panel8.Location = new Point(0, 40);
+            panel8.Margin = new Padding(4, 5, 4, 5);
             panel8.Name = "panel8";
-            panel8.Padding = new Padding(16, 0, 16, 0);
-            panel8.Size = new Size(1310, 410);
+            panel8.Padding = new Padding(23, 0, 23, 0);
+            panel8.Size = new Size(1871, 683);
             panel8.TabIndex = 10;
             // 
             // panel7
@@ -224,19 +221,19 @@ namespace IdCard.Hanel_obj.components.forms
             panel7.Controls.Add(label2);
             panel7.Controls.Add(wrapperDate);
             panel7.Dock = DockStyle.Top;
-            panel7.Location = new Point(16, 0);
+            panel7.Location = new Point(23, 0);
+            panel7.Margin = new Padding(4, 5, 4, 5);
             panel7.Name = "panel7";
-            panel7.Size = new Size(1278, 51);
+            panel7.Size = new Size(1825, 85);
             panel7.TabIndex = 9;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(-2, 9);
-            label2.Margin = new Padding(2, 0, 2, 0);
+            label2.Location = new Point(-3, 15);
             label2.Name = "label2";
-            label2.Size = new Size(134, 30);
+            label2.Size = new Size(193, 45);
             label2.TabIndex = 1;
             label2.Text = "Lịch sử visit";
             label2.Click += label2_Click;
@@ -245,18 +242,18 @@ namespace IdCard.Hanel_obj.components.forms
             // 
             wrapperDate.Controls.Add(dtFilter);
             wrapperDate.Dock = DockStyle.Right;
-            wrapperDate.Location = new Point(895, 0);
+            wrapperDate.Location = new Point(1278, 0);
+            wrapperDate.Margin = new Padding(4, 5, 4, 5);
             wrapperDate.Name = "wrapperDate";
-            wrapperDate.Size = new Size(383, 51);
+            wrapperDate.Size = new Size(547, 85);
             wrapperDate.TabIndex = 9;
             // 
             // dtFilter
             // 
             dtFilter.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtFilter.Location = new Point(170, 14);
-            dtFilter.Margin = new Padding(2);
+            dtFilter.Location = new Point(243, 23);
             dtFilter.Name = "dtFilter";
-            dtFilter.Size = new Size(211, 25);
+            dtFilter.Size = new Size(300, 34);
             dtFilter.TabIndex = 5;
             // 
             // panel5
@@ -264,8 +261,9 @@ namespace IdCard.Hanel_obj.components.forms
             panel5.BackColor = SystemColors.Control;
             panel5.Dock = DockStyle.Top;
             panel5.Location = new Point(0, 0);
+            panel5.Margin = new Padding(4, 5, 4, 5);
             panel5.Name = "panel5";
-            panel5.Size = new Size(1310, 24);
+            panel5.Size = new Size(1871, 40);
             panel5.TabIndex = 7;
             // 
             // panel3
@@ -277,19 +275,21 @@ namespace IdCard.Hanel_obj.components.forms
             panel3.Controls.Add(label3);
             panel3.Controls.Add(label1);
             panel3.Dock = DockStyle.Top;
-            panel3.Location = new Point(16, 66);
+            panel3.Location = new Point(23, 110);
+            panel3.Margin = new Padding(4, 5, 4, 5);
             panel3.Name = "panel3";
-            panel3.Padding = new Padding(12, 0, 12, 12);
-            panel3.Size = new Size(1310, 121);
+            panel3.Padding = new Padding(17, 0, 17, 20);
+            panel3.Size = new Size(1871, 202);
             panel3.TabIndex = 5;
             // 
             // panel2
             // 
             panel2.Controls.Add(_lbTitle);
             panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(16, 16);
+            panel2.Location = new Point(23, 27);
+            panel2.Margin = new Padding(4, 5, 4, 5);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1310, 50);
+            panel2.Size = new Size(1871, 83);
             panel2.TabIndex = 4;
             // 
             // _lbTitle
@@ -298,19 +298,17 @@ namespace IdCard.Hanel_obj.components.forms
             _lbTitle.Dock = DockStyle.Top;
             _lbTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
             _lbTitle.Location = new Point(0, 0);
-            _lbTitle.Margin = new Padding(2, 0, 2, 0);
             _lbTitle.Name = "_lbTitle";
-            _lbTitle.Size = new Size(199, 37);
+            _lbTitle.Size = new Size(291, 54);
             _lbTitle.TabIndex = 3;
             _lbTitle.Text = "Chi tiết lịch sử";
             // 
             // DialogCustomerHistories
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1342, 637);
+            ClientSize = new Size(1917, 1062);
             Controls.Add(panel1);
-            Margin = new Padding(2);
             Name = "DialogCustomerHistories";
             Text = "DialogCustomerHistories";
             Load += DialogCustomerHistories_Load;

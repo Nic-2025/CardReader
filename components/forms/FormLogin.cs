@@ -14,16 +14,16 @@ namespace IdCard.Hanel_obj.components.forms
             InitializeComponent();
         }
 
-        //protected override CreateParams CreateParams
-        //{
-        //    get
-        //    {
-        //        const int CS_NOCLOSE = 0x200;
-        //        CreateParams cp = base.CreateParams;
-        //        cp.ClassStyle |= CS_NOCLOSE;
-        //        return cp;
-        //    }
-        //}
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int CS_NOCLOSE = 0x200;
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= CS_NOCLOSE;
+                return cp;
+            }
+        }
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
@@ -38,16 +38,16 @@ namespace IdCard.Hanel_obj.components.forms
             {
                 MessageBox.Show(this, "Wrong username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
+
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
+            Application.Exit();
         }
     }
 }
