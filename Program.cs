@@ -1,6 +1,5 @@
 using IdCard.Hanel.Models;
-using IdCard.Hanel_obj.auxi;
-using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace IdCard.Hanel_obj
 {
@@ -12,6 +11,15 @@ namespace IdCard.Hanel_obj
         [STAThread]
         static void Main()
         {
+            Console.WriteLine("Starting application...");
+            // Add custom DLL loading logic
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                string folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lib", "dll");
+                string assemblyPath = Path.Combine(folderPath, new AssemblyName(args.Name).Name + ".dll");
+                return File.Exists(assemblyPath) ? Assembly.LoadFrom(assemblyPath) : null;
+            };
+
             try
             {
                 using var mutex = new Mutex(true, "HANEL_IDCARD_VERIFY", out var createdNew);
@@ -20,6 +28,7 @@ namespace IdCard.Hanel_obj
                     throw new Exception("Load device failed");
                 }
 
+                Console.WriteLine("Creating application database...");
                 // Initialize the singleton instance of AuthenCardDbContext
                 var dbContext = AuthenCardDbContext.Instance;
 
@@ -27,6 +36,7 @@ namespace IdCard.Hanel_obj
                 // see https://aka.ms/applicationconfiguration.
                 ApplicationConfiguration.Initialize();
 
+                Console.WriteLine("Creating form....");
                 var mainForm = new components.forms.MonitorForm();
                 Application.Run(mainForm);
             }

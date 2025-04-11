@@ -36,10 +36,9 @@ namespace IdCard.Hanel_obj.components.forms
             this.WindowState = FormWindowState.Maximized;
 
             pnAuth.Controls.Add(_authComponent);
-            pnAuth.Width = 10;
             _authComponent.OnBegin += HandleAuthBegin;
             _authComponent.OnDone += HandleAuthDone;
-
+            this.HandleAuthDone(null);
 
             OnChangeContentType(ContentType.None);
 
@@ -212,13 +211,15 @@ namespace IdCard.Hanel_obj.components.forms
             pnAuth.Location = new Point(pnContent.Width / 2 - pnAuth.Width / 2, pnContent.Height / 2 - pnAuth.Height / 2);
         }
 
-        private void HandleAuthDone(InOutLog newLog)
+        private void HandleAuthDone(InOutLog? newLog)
         {
-            if (_userControl != null && _userControl is UiDailyLogbook dlb)
+            if (_userControl != null && _userControl is UiDailyLogbook dlb && newLog != null)
             {
                 dlb.Reload();
-                pnAuth.Width = 10;
             }
+
+            pnAuth.Width = 1;
+            pnAuth.Location = new Point(0, 1);
         }
 
 

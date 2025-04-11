@@ -22,7 +22,7 @@ namespace IdCard.Hanel_obj.forms
         private readonly AdditionFieldRepository _fielsRepo = new(AuthenCardDbContext.Instance);
 
         public delegate void HandleBeginEvent();
-        public delegate void HandleDoneEvent(InOutLog newLog);
+        public delegate void HandleDoneEvent(InOutLog? newLog);
 
         public event HandleBeginEvent? OnBegin;
         public event HandleDoneEvent? OnDone;
@@ -95,7 +95,7 @@ namespace IdCard.Hanel_obj.forms
                 try
                 {
                     int score = _reader.CompareFace(_cardImage, _currentFrame);
-                    var matched = score >= 50;
+                    var matched = score >= AppConfig.Instance.CompareMatched;
                     if (matched)
                     {
                         _verifyImage.IsVerified = true;
@@ -297,6 +297,8 @@ namespace IdCard.Hanel_obj.forms
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
+
+            this.OnDone?.Invoke(null);
             ResetState();
             this.Hide();
         }
@@ -380,9 +382,8 @@ namespace IdCard.Hanel_obj.forms
                 return;
 
             // Automatic
-            _signIoStatus.IsManual = _cbManual.SelectedIndex == 0 ? false : true;
+            _signIoStatus.IsManual = _cbManual.SelectedIndex != 0;
             DetectLatestCheckIn(_customer.Id);
-
         }
 
         private void UiAuthen_Load(object sender, EventArgs e)

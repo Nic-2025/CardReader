@@ -1,0 +1,21 @@
+<Project>
+    <ItemGroup>
+        <PackageReference Update="System.Text.Json" Version="9.0.4" />
+    </ItemGroup>
+
+    <!-- Add target framework and runtime identifier -->
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <!-- Ensure compatibility with System.Text.Json -->
+        <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+        <!-- Ensure the release package is self-contained -->
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <!-- Ensure all content is included in the single-file executable -->
+        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+        <!-- Enable debugging options -->
+        <!-- <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols> -->
+    </PropertyGroup>
+</Project>

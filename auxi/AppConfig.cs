@@ -1,32 +1,10 @@
-using Microsoft.Extensions.Configuration;
-
 namespace IdCard.Hanel_obj.auxi
 {
-    //public class DatabaseSettings
-    //{
-    //    public string Path { get; set; }
-
-    //    public DatabaseSettings()
-    //    {
-    //        var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-    //        var companyName = "MyCompany"; // Replace with your actual company name
-    //        var directoryPath = System.IO.Path.Combine(appDataPath, companyName);
-
-    //        // Ensure the directory exists
-    //        if (!Directory.Exists(directoryPath))
-    //        {
-    //            Directory.CreateDirectory(directoryPath);
-    //        }
-
-    //        Path = System.IO.Path.Combine(directoryPath, "authcard.db");
-    //    }
-    //}
-
     public class AppConfig
     {
         //public DatabaseSettings Database { get; set; } = new DatabaseSettings();
 
-        public int CompareMatched { get; set; } = 60;
+        public int CompareMatched { get; set; } = 20;
 
         public string DataPath { get; set; } = "";
 
@@ -49,28 +27,57 @@ namespace IdCard.Hanel_obj.auxi
 
         public static AppConfig LoadConfiguration()
         {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-            var configuration = builder.Build();
-            var appConfig = new AppConfig();
-            configuration.Bind(appConfig);
-
-            if (appConfig.DataPath == "")
+            AppConfig appConfig = new();
+            try
             {
-                appConfig.DataPath = GetDataPath();
-            }
+                var configFilePath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+                if (!File.Exists(configFilePath))
+                {
+                    // throw new FileNotFoundException($"Configuration file not found: {configFilePath}");
+                    return appConfig; // Return a new instance with default values if the file is not found
+                }
 
-            return appConfig;
+
+                //var json = File.ReadAllText(configFilePath);
+                //MessageBox.Show("Json: " + json);
+
+                //appConfig = JsonSerializer.Deserialize<AppConfig>(json);
+                //if (appConfig == null)
+                //{
+                //    MessageBox.Show("Failed to parse configuration file. Using default settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    // throw new InvalidOperationException("Failed to parse configuration file.");
+                //    return new AppConfig(); // Return a new instance with default values if parsing fails
+                //}
+
+                if (string.IsNullOrEmpty(appConfig.DataPath))
+                {
+                    appConfig.DataPath = GetDataPath();
+                }
+
+                if (!Directory.Exists(appConfig.DataPath))
+                {
+                    Directory.CreateDirectory(appConfig.DataPath);
+                }
+
+                return appConfig;
+            }
+            catch (Exception)
+            {
+                //throw new InvalidOperationException("Failed to load configuration from file.", ex);
+                return new AppConfig()
+                {
+                    DataPath = GetDataPath(),
+                    CompareMatched = 60,
+                };
+            }
         }
 
 
         private static string GetDataPath()
         {
             var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var companyName = "Nacencom"; // Replace with your actual company name
-            var directoryPath = Path.Combine(appDataPath, companyName);
+            var companyName = "Nacencomm";
+            var directoryPath = Path.Combine(appDataPath, companyName, "CardReader");
 
             // Ensure the directory exists
             if (!Directory.Exists(directoryPath))
