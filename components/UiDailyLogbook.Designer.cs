@@ -37,9 +37,12 @@
             panel2 = new Panel();
             date = new Label();
             panel3 = new Panel();
+            banner = new Panel();
+            panel5 = new Panel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // _lbTitle
@@ -55,13 +58,13 @@
             // 
             // uiioLogTable1
             // 
-            uiioLogTable1.Dock = DockStyle.Top;
+            uiioLogTable1.Dock = DockStyle.Fill;
             uiioLogTable1.From = null;
             uiioLogTable1.Limit = 10;
             uiioLogTable1.Location = new Point(0, 0);
             uiioLogTable1.Margin = new Padding(1);
             uiioLogTable1.Name = "uiioLogTable1";
-            uiioLogTable1.Size = new Size(1411, 735);
+            uiioLogTable1.Size = new Size(1411, 647);
             uiioLogTable1.Status = null;
             uiioLogTable1.TabIndex = 1;
             uiioLogTable1.To = null;
@@ -134,19 +137,39 @@
             // 
             // panel3
             // 
-            panel3.Controls.Add(uiioLogTable1);
+            panel3.Controls.Add(panel5);
+            panel3.Controls.Add(banner);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(0, 134);
+            panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1411, 700);
+            panel3.Size = new Size(1411, 834);
             panel3.TabIndex = 6;
+            // 
+            // banner
+            // 
+            banner.BackgroundImageLayout = ImageLayout.Stretch;
+            banner.BackgroundImage = Image.FromFile(Path.Combine(Application.StartupPath, "public", "banner.png"));
+            banner.Dock = DockStyle.Top;
+            banner.Location = new Point(0, 0);
+            banner.Name = "banner";
+            banner.Size = new Size(1411, 187);
+            banner.TabIndex = 6;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(panel1);
+            panel5.Controls.Add(uiioLogTable1);
+            panel5.Dock = DockStyle.Fill;
+            panel5.Location = new Point(0, 187);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(1411, 647);
+            panel5.TabIndex = 7;
             // 
             // UiDailyLogbook
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel3);
-            Controls.Add(panel1);
             Margin = new Padding(2);
             Name = "UiDailyLogbook";
             Size = new Size(1411, 834);
@@ -155,6 +178,7 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
+            panel5.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -169,5 +193,7 @@
         private TextBox textBox1;
         private Panel panel3;
         private Label date;
+        private Panel banner;
+        private Panel panel5;
     }
 }

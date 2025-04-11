@@ -103,6 +103,9 @@
     <None Update="model\sr.prototxt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="public\banner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="reader.log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
