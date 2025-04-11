@@ -31,49 +31,103 @@
             _lbTitle = new Label();
             btnAddField = new Button();
             pnFormField = new FlowLayoutPanel();
+            panel1 = new Panel();
+            panel2 = new Panel();
+            horizo = new Panel();
+            panel3 = new Panel();
+            panel1.SuspendLayout();
+            panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // _lbTitle
             // 
             _lbTitle.AutoSize = true;
             _lbTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _lbTitle.Location = new Point(39, 26);
+            _lbTitle.Location = new Point(0, 0);
+            _lbTitle.Margin = new Padding(2, 0, 2, 0);
             _lbTitle.Name = "_lbTitle";
-            _lbTitle.Size = new Size(321, 54);
+            _lbTitle.Size = new Size(220, 37);
             _lbTitle.TabIndex = 0;
             _lbTitle.Text = "Form Thông Tin";
             // 
             // btnAddField
             // 
-            btnAddField.Location = new Point(917, 31);
+            btnAddField.Location = new Point(36, 7);
+            btnAddField.Margin = new Padding(2);
             btnAddField.Name = "btnAddField";
-            btnAddField.Size = new Size(234, 60);
+            btnAddField.Size = new Size(164, 36);
             btnAddField.TabIndex = 1;
-            btnAddField.Text = "Add Field";
+            btnAddField.Text = "Add Custom Field";
             btnAddField.UseVisualStyleBackColor = true;
             btnAddField.Click += BtnAddField_Click;
             // 
             // pnFormField
             // 
             pnFormField.AutoScroll = true;
+            pnFormField.Dock = DockStyle.Fill;
             pnFormField.FlowDirection = FlowDirection.TopDown;
-            pnFormField.Location = new Point(167, 228);
+            pnFormField.Location = new Point(0, 0);
+            pnFormField.Margin = new Padding(2);
             pnFormField.Name = "pnFormField";
-            pnFormField.Size = new Size(575, 691);
+            pnFormField.Padding = new Padding(0, 16, 0, 0);
+            pnFormField.Size = new Size(793, 800);
             pnFormField.TabIndex = 3;
             pnFormField.Paint += pnFormField_Paint;
             // 
+            // panel1
+            // 
+            panel1.Controls.Add(panel2);
+            panel1.Controls.Add(horizo);
+            panel1.Controls.Add(_lbTitle);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(32, 32);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(793, 67);
+            panel1.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(btnAddField);
+            panel2.Dock = DockStyle.Right;
+            panel2.Location = new Point(593, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(200, 65);
+            panel2.TabIndex = 5;
+            // 
+            // horizo
+            // 
+            horizo.BackColor = Color.FromArgb(20, 0, 0, 0);
+            horizo.Dock = DockStyle.Bottom;
+            horizo.Location = new Point(0, 65);
+            horizo.Name = "horizo";
+            horizo.Size = new Size(793, 2);
+            horizo.TabIndex = 5;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(pnFormField);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(32, 99);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(793, 800);
+            panel3.TabIndex = 5;
+            // 
             // UiFormThongTin
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(pnFormField);
-            Controls.Add(btnAddField);
-            Controls.Add(_lbTitle);
+            Controls.Add(panel3);
+            Controls.Add(panel1);
+            Margin = new Padding(2);
             Name = "UiFormThongTin";
-            Size = new Size(1224, 1178);
+            Padding = new Padding(32);
+            Size = new Size(857, 707);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -81,5 +135,9 @@
         private Label _lbTitle;
         private Button btnAddField;
         private FlowLayoutPanel pnFormField;
+        private Panel panel1;
+        private Panel panel2;
+        private Panel horizo;
+        private Panel panel3;
     }
 }

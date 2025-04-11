@@ -29,14 +29,16 @@ namespace IdCard.Hanel_obj.components.forms
                 var image = Image.FromFile(ImagePath);
                 pbImage.Image = image;
 
-                // Adjust form and PictureBox size to fit the image
-                this.ClientSize = new Size(image.Width, image.Height);
-                pbImage.Size = image.Size;
+                // Set để ảnh vừa với PictureBox
+                pbImage.SizeMode = PictureBoxSizeMode.Zoom;
+                pbImage.Dock = DockStyle.Fill;
             }
             else
             {
                 MessageBox.Show("Image file not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+
         }
     }
 }

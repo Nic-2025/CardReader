@@ -14,6 +14,7 @@ namespace IdCard.Hanel_obj.components
         public UiFormThongTin()
         {
             InitializeComponent();
+            this.Dock = DockStyle.Fill;
             ReloadFields();
         }
 
@@ -27,7 +28,11 @@ namespace IdCard.Hanel_obj.components
 
         private void BtnAddField_Click(object sender, EventArgs e)
         {
-            forms.DialogAdditionFieldSetup dialog = new();
+            var dialog = new forms.DialogAdditionFieldSetup();
+            // Đặt vị trí giữa màn hình
+            dialog.StartPosition = FormStartPosition.CenterScreen;
+            // (Tuỳ chọn) Điều chỉnh kích thước nếu muốn
+            var screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
             dialog.ShowDialog();
             ReloadFields();
         }
@@ -44,8 +49,10 @@ namespace IdCard.Hanel_obj.components
                     forms.DialogAdditionFieldSetup dialog = new()
                     {
                         IsEdit = true,
-                        CurrentField = field
+                        CurrentField = field,
+                        StartPosition = FormStartPosition.CenterScreen
                     };
+
                     dialog.ShowDialog();
                     ReloadFields();
                 };
@@ -53,8 +60,8 @@ namespace IdCard.Hanel_obj.components
                 uiField.OnDelete += (field) =>
                 {
                     if (MessageBox.Show(
-                        "Are you sure you want to delete this field?",
-                        "Confirm Delete",
+                        "Quý khách có chắc chắn muốn xoá trường dữ liệu?",
+                        "Xoá trường dữ liệu",
                         MessageBoxButtons.YesNo,
                          MessageBoxIcon.Question) == DialogResult.Yes)
                     {

@@ -44,17 +44,19 @@
             panel2 = new Panel();
             panel4 = new Panel();
             panel3 = new Panel();
+            panel5 = new Panel();
             countSignedOut = new Label();
-            countAll = new Label();
-            label4 = new Label();
-            countSignedIn = new Label();
             label3 = new Label();
+            label4 = new Label();
             label1 = new Label();
+            countSignedIn = new Label();
+            countAll = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvLogIO).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // dgvLogIO
@@ -79,8 +81,8 @@
             dataGridViewCellStyle2.BackColor = Color.White;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
             dataGridViewCellStyle2.ForeColor = Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(234, 236, 240);
+            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvLogIO.DefaultCellStyle = dataGridViewCellStyle2;
             dgvLogIO.Dock = DockStyle.Top;
@@ -149,11 +151,14 @@
             // 
             // uiPaginition1
             // 
-            uiPaginition1.CurrentPage = 0;
-            uiPaginition1.Location = new Point(1, 13);
+            uiPaginition1.AutoSize = true;
+            uiPaginition1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            uiPaginition1.CurrentPage = 1;
+            uiPaginition1.Dock = DockStyle.Right;
+            uiPaginition1.Location = new Point(354, 0);
             uiPaginition1.Margin = new Padding(1);
             uiPaginition1.Name = "uiPaginition1";
-            uiPaginition1.Size = new Size(319, 49);
+            uiPaginition1.Size = new Size(70, 52);
             uiPaginition1.TabIndex = 1;
             uiPaginition1.TotalPages = 0;
             uiPaginition1.Load += uiPaginition1_Load;
@@ -175,95 +180,107 @@
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 618);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1274, 63);
+            panel2.Padding = new Padding(0, 32, 0, 16);
+            panel2.Size = new Size(1274, 100);
             panel2.TabIndex = 2;
             // 
             // panel4
             // 
             panel4.Controls.Add(uiPaginition1);
             panel4.Dock = DockStyle.Right;
-            panel4.Location = new Point(850, 0);
+            panel4.Location = new Point(850, 32);
             panel4.Name = "panel4";
-            panel4.Size = new Size(424, 63);
+            panel4.Size = new Size(424, 52);
             panel4.TabIndex = 3;
             // 
             // panel3
             // 
-            panel3.Controls.Add(countSignedOut);
-            panel3.Controls.Add(label4);
-            panel3.Controls.Add(countSignedIn);
-            panel3.Controls.Add(label3);
-            panel3.Controls.Add(countAll);
-            panel3.Controls.Add(label1);
+            panel3.Controls.Add(panel5);
             panel3.Dock = DockStyle.Left;
-            panel3.Location = new Point(0, 0);
+            panel3.Location = new Point(0, 32);
             panel3.Name = "panel3";
-            panel3.Size = new Size(459, 63);
+            panel3.Size = new Size(459, 52);
             panel3.TabIndex = 2;
+            // 
+            // panel5
+            // 
+            panel5.AutoSize = true;
+            panel5.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel5.Controls.Add(countSignedOut);
+            panel5.Controls.Add(label3);
+            panel5.Controls.Add(label4);
+            panel5.Controls.Add(label1);
+            panel5.Controls.Add(countSignedIn);
+            panel5.Controls.Add(countAll);
+            panel5.Dock = DockStyle.Left;
+            panel5.Location = new Point(0, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(415, 52);
+            panel5.TabIndex = 3;
             // 
             // countSignedOut
             // 
             countSignedOut.AutoSize = true;
             countSignedOut.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             countSignedOut.ForeColor = Color.Red;
-            countSignedOut.Location = new Point(379, 28);
+            countSignedOut.Location = new Point(373, 0);
             countSignedOut.Name = "countSignedOut";
             countSignedOut.Size = new Size(39, 15);
             countSignedOut.TabIndex = 5;
             countSignedOut.Text = "result";
             countSignedOut.Click += countSignedOut_Click;
             // 
-            // countAll
-            // 
-            countAll.AutoSize = true;
-            countAll.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            countAll.ForeColor = Color.Black;
-            countAll.Location = new Point(47, 28);
-            countAll.Name = "countAll";
-            countAll.Size = new Size(39, 15);
-            countAll.TabIndex = 1;
-            countAll.Text = "result";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(256, 28);
-            label4.Name = "label4";
-            label4.RightToLeft = RightToLeft.No;
-            label4.Size = new Size(117, 15);
-            label4.TabIndex = 4;
-            label4.Text = "Số lượng Signed out:";
-            // 
-            // countSignedIn
-            // 
-            countSignedIn.AutoSize = true;
-            countSignedIn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            countSignedIn.ForeColor = Color.Green;
-            countSignedIn.Location = new Point(205, 28);
-            countSignedIn.Name = "countSignedIn";
-            countSignedIn.Size = new Size(39, 15);
-            countSignedIn.TabIndex = 3;
-            countSignedIn.Text = "result";
-            // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(99, 28);
+            label3.Location = new Point(93, 0);
             label3.Name = "label3";
             label3.RightToLeft = RightToLeft.No;
             label3.Size = new Size(109, 15);
             label3.TabIndex = 2;
             label3.Text = "Số lượng Signed in:";
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(250, 0);
+            label4.Name = "label4";
+            label4.RightToLeft = RightToLeft.No;
+            label4.Size = new Size(117, 15);
+            label4.TabIndex = 4;
+            label4.Text = "Số lượng Signed out:";
+            // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(6, 28);
+            label1.Location = new Point(0, 0);
             label1.Name = "label1";
             label1.RightToLeft = RightToLeft.No;
             label1.Size = new Size(45, 15);
             label1.TabIndex = 0;
             label1.Text = "Tất cả: ";
+            // 
+            // countSignedIn
+            // 
+            countSignedIn.AutoSize = true;
+            countSignedIn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            countSignedIn.ForeColor = Color.Green;
+            countSignedIn.Location = new Point(199, 0);
+            countSignedIn.Name = "countSignedIn";
+            countSignedIn.Size = new Size(39, 15);
+            countSignedIn.TabIndex = 3;
+            countSignedIn.Text = "result";
+            // 
+            // countAll
+            // 
+            countAll.AutoSize = true;
+            countAll.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            countAll.ForeColor = Color.Black;
+            countAll.Location = new Point(41, 0);
+            countAll.Name = "countAll";
+            countAll.Size = new Size(39, 15);
+            countAll.TabIndex = 1;
+            countAll.Text = "result";
             // 
             // UiIOLogTable
             // 
@@ -278,8 +295,11 @@
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel4.ResumeLayout(false);
+            panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             ResumeLayout(false);
         }
         #endregion
@@ -303,5 +323,6 @@
         private Label label3;
         private Label countAll;
         private Label label1;
+        private Panel panel5;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using IdCard.Hanel.Models;
 
@@ -24,9 +25,9 @@ namespace IdCard.Hanel_obj.components.common
         {
 
             Field = field;
-
             InitializeComponent();
             ConfigField();
+
 
             if (isInput)
             {
@@ -52,7 +53,10 @@ namespace IdCard.Hanel_obj.components.common
 
             _inputControl = CreateValueField();
             if (_inputControl != null)
+            {
                 flowPn.Controls.Add(_inputControl);
+            }    
+
         }
 
         public string GetValue()
@@ -205,6 +209,11 @@ namespace IdCard.Hanel_obj.components.common
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             this.OnDelete?.Invoke(Field);
+        }
+
+        private void _lbTitle_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

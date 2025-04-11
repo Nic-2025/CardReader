@@ -35,6 +35,7 @@
             panel1 = new Panel();
             textBox1 = new TextBox();
             panel2 = new Panel();
+            date = new Label();
             panel3 = new Panel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -64,6 +65,7 @@
             uiioLogTable1.Status = null;
             uiioLogTable1.TabIndex = 1;
             uiioLogTable1.To = null;
+            uiioLogTable1.Load += uiioLogTable1_Load;
             // 
             // cbStatus
             // 
@@ -82,11 +84,11 @@
             // 
             lbDate.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbDate.AutoSize = true;
-            lbDate.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbDate.Location = new Point(2, 28);
+            lbDate.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbDate.Location = new Point(3, 46);
             lbDate.Margin = new Padding(2, 0, 2, 0);
             lbDate.Name = "lbDate";
-            lbDate.Size = new Size(70, 37);
+            lbDate.Size = new Size(60, 30);
             lbDate.TabIndex = 4;
             lbDate.Text = "time";
             // 
@@ -112,12 +114,23 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(date);
             panel2.Controls.Add(lbDate);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(1211, 0);
+            panel2.Location = new Point(1268, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(200, 134);
+            panel2.Size = new Size(143, 134);
             panel2.TabIndex = 6;
+            // 
+            // date
+            // 
+            date.AutoSize = true;
+            date.Font = new Font("Segoe UI", 10F);
+            date.Location = new Point(3, 78);
+            date.Name = "date";
+            date.Size = new Size(45, 19);
+            date.TabIndex = 5;
+            date.Text = "label1";
             // 
             // panel3
             // 
@@ -155,5 +168,6 @@
         private Panel panel2;
         private TextBox textBox1;
         private Panel panel3;
+        private Label date;
     }
 }

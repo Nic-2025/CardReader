@@ -5,6 +5,7 @@
         public UiAbout()
         {
             InitializeComponent();
+            this.Dock = DockStyle.Fill;
         }
     }
 }

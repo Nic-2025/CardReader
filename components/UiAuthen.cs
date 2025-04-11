@@ -31,10 +31,8 @@ namespace IdCard.Hanel_obj.forms
         public UiAuthen()
         {
             InitializeComponent();
-
             SetupReader();
             EnsureFolderPathExists(ImagePath);
-
             ResetState();
             this.Hide();
         }
@@ -385,5 +383,11 @@ namespace IdCard.Hanel_obj.forms
             DetectLatestCheckIn(_customer.Id);
 
         }
+
+        private void UiAuthen_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

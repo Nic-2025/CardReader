@@ -5,6 +5,8 @@
         public UiReport()
         {
             InitializeComponent();
+            this.Dock = DockStyle.Fill;
+
             UpdateTimeFilter();
         }
 

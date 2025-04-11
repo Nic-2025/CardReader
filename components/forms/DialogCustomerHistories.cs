@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace IdCard.Hanel_obj.components.forms
 {
-    public partial class DialogCustomerHistories: Form
+    public partial class DialogCustomerHistories : Form
     {
         private CustomerRepository ctmRepository = new(AuthenCardDbContext.Instance);
         private InOutLogRepository ioRepository = new(AuthenCardDbContext.Instance);
@@ -28,10 +28,13 @@ namespace IdCard.Hanel_obj.components.forms
         public DateTime From = new DateTime(2025, 04, 01);
         public DateTime To = DateTime.Now;
 
+        private bool useMockData = true;
+
 
 
         public DialogCustomerHistories(string customerId)
         {
+            
             _customerId = customerId;
             InitializeComponent();
             SetupDGVHistories();
@@ -55,12 +58,36 @@ namespace IdCard.Hanel_obj.components.forms
             }
 
             dgvHistories.Columns.Add("Image", "Ảnh signed in");
+            dgvHistories.CellPainting += dgvHistories_CellPainting;
+            dgvHistories.CellMouseMove += dgvHistories_CellMouseMove;
             dgvHistories.CellClick += dgvHistories_OnClick;
             // Add more columns as needed
         }
 
+        //private void LoadData()
+        //{
+        //    _ctm = ctmRepository.GetCustomerById(_customerId);
+        //    UpdateInfo();
+
+        //    if (_ctm == null)
+        //    {
+        //        return;
+        //    }
+        //    _logs = ioRepository.GetByCCCD(From, To, _customerId);
+        //    RenderData();
+        //}
+
+
         private void LoadData()
         {
+            if (useMockData)
+            {
+                GenerateMockData();
+                UpdateInfo();
+                RenderData();
+                return;
+            }
+
             _ctm = ctmRepository.GetCustomerById(_customerId);
             UpdateInfo();
 
@@ -71,7 +98,6 @@ namespace IdCard.Hanel_obj.components.forms
             _logs = ioRepository.GetByCCCD(From, To, _customerId);
             RenderData();
         }
-
 
         private void UpdateInfo()
         {
@@ -111,7 +137,7 @@ namespace IdCard.Hanel_obj.components.forms
                 }
                 row.Cells["Image"] = new DataGridViewButtonCell
                 {
-                    Value = "Xem Ảnh"
+                    Value = "Xem ảnh"
                 };
             }
         }
@@ -122,9 +148,129 @@ namespace IdCard.Hanel_obj.components.forms
             if (e.RowIndex >= 0 && dgvHistories.Columns[e.ColumnIndex].Name == "Image")
             {
                 var imageForm = new FormImage(_logs[e.RowIndex].InImg);
+                imageForm.StartPosition = FormStartPosition.CenterScreen;
                 imageForm.ShowDialog();
             }
         }
 
+        private void GenerateMockData()
+        {
+            _ctm = new Customer
+            {
+                Id = _customerId,
+                HoTen = "Nguyễn Văn Mẫu"
+            };
+
+            _fields = new List<AdditionField>
+    {
+        new AdditionField { Label = "Mục đích" },
+        new AdditionField { Label = "Người liên hệ" }
+    };
+
+            _logs = new List<InOutLog>();
+            for (int i = 0; i < 20; i++)
+            {
+                var checkIn = DateTime.Today.AddDays(-i).AddHours(8).AddMinutes(i * 3);
+                var checkOut = checkIn.AddHours(2);
+
+                var log = new InOutLog
+                {
+                    CheckInTime = checkIn,
+                    CheckOutTime = checkOut,
+                    AdditionFields = new Dictionary<string, string>
+            {
+                { "Mục đích", $"Giao dịch {i + 1}" },
+                { "Người liên hệ", $"Mr. A{i}" }
+            }
+                };
+
+                _logs.Add(log);
+            }
+        }
+
+
+        private void dgvHistories_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+
+
+            if (e.RowIndex >= 0 && dgvHistories.Columns[e.ColumnIndex].Name == "Image" && e.Value != null)
+            {
+                e.Handled = true;
+                e.PaintBackground(e.ClipBounds, false);
+
+                string text = e.Value.ToString();
+                Font font = new Font(e.CellStyle.Font, FontStyle.Underline);
+                Color linkColor = Color.Black;
+
+                using (SolidBrush brush = new SolidBrush(linkColor))
+                {
+                    StringFormat format = new StringFormat
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Center
+                    };
+
+                    e.Graphics.DrawString(text, font, brush, e.CellBounds, format);
+                }
+
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
+            }
+
+        }
+
+
+        private void dgvHistories_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvHistories.Columns[e.ColumnIndex].Name == "Image")
+            {
+                dgvHistories.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                dgvHistories.Cursor = Cursors.Default;
+            }
+        }
+
+
+
+        private void DialogCustomerHistories_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvHistories_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void pnInfo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

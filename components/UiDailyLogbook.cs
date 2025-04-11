@@ -8,8 +8,12 @@ namespace IdCard.Hanel_obj.components
         public UiDailyLogbook()
         {
             InitializeComponent();
-            uiioLogTable1.From = DateTime.Now.Date;
-            lbDate.Text = DateTime.Now.Date.ToString("dd/MM/yyyyy");
+            DateTime now = DateTime.Now;
+            uiioLogTable1.From = now.Date;
+            lbDate.Text = $"{now:dd/MM/yyyy}";
+            string[] weekdays = { "Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7" };
+            string formatted = $"{weekdays[(int)now.DayOfWeek]}, {now:dd/MM/yyyy}";
+            date.Text = formatted;
             this.Dock = DockStyle.Fill;
         }
 
@@ -34,6 +38,11 @@ namespace IdCard.Hanel_obj.components
                 default:
                     break;
             }
+        }
+
+        private void uiioLogTable1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -56,20 +56,21 @@ namespace IdCard.Hanel_obj.components.forms
             this.WindowState = FormWindowState.Maximized;
             this.Load += (s, e) => MonitorForm_Resize(null, null);
 
-            var formLogin = new FormLogin();
-            formLogin.ShowDialog();
-            _user = formLogin.User;
+            //var formLogin = new FormLogin();
+            //formLogin.ShowDialog();
+            //_user = formLogin.User;
 
-            if (AuthReader.Instance.CardReader.SerialNumber == "")
-            {
-                MessageBox.Show("Không thể tìm thấy thiết bị đọc thẻ. Vui lòng kiểm tra kết nối", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                AuthReader.Instance.CardReader.OnDetectDevice += OnSerialNumber;
-            }
-            else
-            {
-                OnSerialNumber(new ReaderSerial(AuthReader.Instance.CardReader.SerialNumber));
-            }
+            //if (AuthReader.Instance.CardReader.SerialNumber == "")
+            //{
+            //    MessageBox.Show("Không thể tìm thấy thiết bị đọc thẻ. Vui lòng kiểm tra kết nối", "Error",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    AuthReader.Instance.CardReader.OnDetectDevice += OnSerialNumber;
+            //}
+            //else
+            //{
+            //    OnSerialNumber(new ReaderSerial(AuthReader.Instance.CardReader.SerialNumber));
+            //}
+
         }
 
         private void MonitorForm_FormClosing(object? sender, FormClosingEventArgs e)

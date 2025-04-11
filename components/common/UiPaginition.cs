@@ -45,6 +45,7 @@ namespace IdCard.Hanel_obj.components
 
         public UiPaginition()
         {
+            _currentPage = 1;
             InitializeComponent();
         }
 
@@ -62,13 +63,13 @@ namespace IdCard.Hanel_obj.components
             btnPrevious.Width = buttonWidth;
             btnPrevious.Height = buttonHeight;
 
-
             pnlPages.Controls.Add(btnPrevious);
             startX += buttonWidth + buttonSpacing;
 
             // Add sibling pages and current page
             for (int i = Math.Max(1, _currentPage - 2); i <= Math.Min(_totalPages, _currentPage + 2); i++)
             {
+                bool isCurrent = (i == _currentPage);
                 var btnPage = new Button
                 {
                     Text = i.ToString(),
@@ -76,18 +77,29 @@ namespace IdCard.Hanel_obj.components
                     Enabled = i != _currentPage,
                     Width = buttonWidth,
                     Height = buttonHeight,
-                    Location = new Point(startX, 0) // Set button position
+                    Location = new Point(startX, 0), // Set button position
+                    FlatStyle = FlatStyle.Flat,
+                    BackColor = isCurrent ? Color.White : Color.Transparent,
+                    ForeColor = isCurrent ? Color.Black : ColorTranslator.FromHtml("#98A2B3"),
+                    Cursor = Cursors.Hand
+
+
                 };
                 startX += buttonWidth + buttonSpacing; // Update X position for the next button
 
-                btnPage.Click += (s, e) =>
+                btnPage.FlatAppearance.BorderSize = 0;
+
+                if (!isCurrent)
                 {
-                    if (s is Button button && button.Tag is int page)
+                    btnPage.Click += (s, e) =>
                     {
-                        CurrentPage = page;
-                        this.OnPageChanged?.Invoke(page);
-                    }
-                };
+                        if (s is Button button && button.Tag is int page)
+                        {
+                            CurrentPage = page;
+                            this.OnPageChanged?.Invoke(page);
+                        }
+                    };
+                }
                 pnlPages.Controls.Add(btnPage);
             }
 

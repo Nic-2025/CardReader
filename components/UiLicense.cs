@@ -12,6 +12,7 @@ namespace IdCard.Hanel_obj.components
 
         public UiLicense()
         {
+            this.Dock = DockStyle.Fill;
             InitializeComponent();
             UpdateContent();
         }
@@ -33,6 +34,7 @@ namespace IdCard.Hanel_obj.components
         private void BtnActive_Click(object sender, EventArgs e)
         {
             DialogLicense dialog = new();
+            dialog.StartPosition = FormStartPosition.CenterParent;
             dialog.ShowDialog(this);
             if (dialog.License != null)
             {
@@ -41,6 +43,11 @@ namespace IdCard.Hanel_obj.components
                 this.Hide();
             }
             this.UpdateContent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

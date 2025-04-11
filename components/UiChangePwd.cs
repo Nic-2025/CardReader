@@ -13,6 +13,7 @@ namespace IdCard.Hanel_obj.components
         public UiChangePwd()
         {
             InitializeComponent();
+            this.Dock = DockStyle.Fill;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -38,6 +39,16 @@ namespace IdCard.Hanel_obj.components
             {
                 MessageBox.Show("Lỗi: " + ex.ToString());
             }
+        }
+
+        private void _lbTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void horizo_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -47,27 +47,31 @@
             lbSignInTime = new Label();
             _signIoStatus = new IdCard.Hanel_obj.forms.UiSignIOStatus();
             lbTitle = new Label();
+            panel1 = new Panel();
             pnFormContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pImage).BeginInit();
             pnThongTin.SuspendLayout();
             pnImage.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // _cbManual
             // 
             _cbManual.FormattingEnabled = true;
             _cbManual.Items.AddRange(new object[] { "Automatic", "Manual Signout" });
-            _cbManual.Location = new Point(326, -122);
+            _cbManual.Location = new Point(228, -73);
+            _cbManual.Margin = new Padding(2);
             _cbManual.Name = "_cbManual";
-            _cbManual.Size = new Size(96, 33);
+            _cbManual.Size = new Size(68, 23);
             _cbManual.TabIndex = 20;
             // 
             // lbSignInValue
             // 
             lbSignInValue.AutoSize = true;
-            lbSignInValue.Location = new Point(492, -75);
+            lbSignInValue.Location = new Point(344, -45);
+            lbSignInValue.Margin = new Padding(2, 0, 2, 0);
             lbSignInValue.Name = "lbSignInValue";
-            lbSignInValue.Size = new Size(44, 25);
+            lbSignInValue.Size = new Size(30, 15);
             lbSignInValue.TabIndex = 18;
             lbSignInValue.Text = "--:--";
             // 
@@ -75,139 +79,158 @@
             // 
             pnFormField.AutoScroll = true;
             pnFormField.BackColor = SystemColors.Control;
-            pnFormField.Dock = DockStyle.Bottom;
+            pnFormField.Dock = DockStyle.Fill;
             pnFormField.FlowDirection = FlowDirection.TopDown;
             pnFormField.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            pnFormField.Location = new Point(0, 56);
+            pnFormField.Location = new Point(0, 0);
+            pnFormField.Margin = new Padding(2);
             pnFormField.Name = "pnFormField";
-            pnFormField.Size = new Size(543, 379);
+            pnFormField.Size = new Size(380, 261);
             pnFormField.TabIndex = 1;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI Variable Display", 20F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.Location = new Point(3, 0);
+            label9.Font = new Font("Segoe UI Variable Display", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(16, 16);
+            label9.Margin = new Padding(2, 0, 2, 0);
             label9.Name = "label9";
-            label9.Size = new Size(281, 53);
+            label9.Size = new Size(145, 26);
             label9.TabIndex = 0;
             label9.Text = "Form thông tin";
             // 
             // lbSignOutValue
             // 
             lbSignOutValue.AutoSize = true;
-            lbSignOutValue.Location = new Point(694, -75);
+            lbSignOutValue.Location = new Point(486, -45);
+            lbSignOutValue.Margin = new Padding(2, 0, 2, 0);
             lbSignOutValue.Name = "lbSignOutValue";
-            lbSignOutValue.Size = new Size(44, 25);
+            lbSignOutValue.Size = new Size(30, 15);
             lbSignOutValue.TabIndex = 19;
             lbSignOutValue.Text = "--:--";
             // 
             // pnFormContainer
             // 
             pnFormContainer.AutoScroll = true;
+            pnFormContainer.BackColor = Color.White;
+            pnFormContainer.Controls.Add(panel1);
             pnFormContainer.Controls.Add(pnFormField);
-            pnFormContainer.Controls.Add(label9);
-            pnFormContainer.Location = new Point(24, 773);
+            pnFormContainer.Location = new Point(21, 463);
+            pnFormContainer.Margin = new Padding(2);
             pnFormContainer.Name = "pnFormContainer";
-            pnFormContainer.Size = new Size(543, 435);
+            pnFormContainer.Size = new Size(380, 261);
             pnFormContainer.TabIndex = 15;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(314, 145);
+            label4.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Location = new Point(178, 61);
+            label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
-            label4.Size = new Size(180, 38);
+            label4.Size = new Size(93, 19);
             label4.TabIndex = 2;
             label4.Text = "CCCD/CMND";
             // 
             // lbCCCDVal
             // 
             lbCCCDVal.AutoSize = true;
-            lbCCCDVal.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbCCCDVal.Location = new Point(314, 218);
+            lbCCCDVal.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbCCCDVal.Location = new Point(178, 94);
+            lbCCCDVal.Margin = new Padding(2, 0, 2, 0);
             lbCCCDVal.Name = "lbCCCDVal";
-            lbCCCDVal.Size = new Size(136, 38);
+            lbCCCDVal.Size = new Size(74, 19);
             lbCCCDVal.TabIndex = 2;
             lbCCCDVal.Text = "Họ và tên";
             // 
             // lbHoTenVal
             // 
             lbHoTenVal.AutoSize = true;
-            lbHoTenVal.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbHoTenVal.Location = new Point(20, 218);
+            lbHoTenVal.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbHoTenVal.Location = new Point(20, 94);
+            lbHoTenVal.Margin = new Padding(2, 0, 2, 0);
             lbHoTenVal.Name = "lbHoTenVal";
-            lbHoTenVal.Size = new Size(136, 38);
+            lbHoTenVal.Size = new Size(74, 19);
             lbHoTenVal.TabIndex = 2;
             lbHoTenVal.Text = "Họ và tên";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Variable Display", 20F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(0, 0);
+            label1.Font = new Font("Segoe UI Variable Display", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(18, 16);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(316, 53);
+            label1.Size = new Size(163, 26);
             label1.TabIndex = 0;
             label1.Text = "Chi tiết thông tin";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(20, 145);
+            label3.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(20, 61);
+            label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(136, 38);
+            label3.Size = new Size(69, 19);
             label3.TabIndex = 2;
             label3.Text = "Họ và tên";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Variable Display", 20F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(0, 0);
+            label2.Font = new Font("Segoe UI Variable Display", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(20, 16);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(333, 53);
+            label2.Size = new Size(168, 26);
             label2.TabIndex = 0;
             label2.Text = "Thông tin cá nhân";
             // 
             // pImage
             // 
-            pImage.Location = new Point(101, 78);
+            pImage.Location = new Point(77, 51);
+            pImage.Margin = new Padding(2);
             pImage.Name = "pImage";
-            pImage.Size = new Size(333, 239);
+            pImage.Size = new Size(233, 143);
             pImage.TabIndex = 2;
             pImage.TabStop = false;
             // 
             // pnThongTin
             // 
+            pnThongTin.BackColor = Color.White;
             pnThongTin.Controls.Add(label4);
             pnThongTin.Controls.Add(lbCCCDVal);
             pnThongTin.Controls.Add(lbHoTenVal);
             pnThongTin.Controls.Add(label3);
             pnThongTin.Controls.Add(label2);
-            pnThongTin.Location = new Point(24, 406);
+            pnThongTin.Location = new Point(19, 289);
+            pnThongTin.Margin = new Padding(2);
             pnThongTin.Name = "pnThongTin";
-            pnThongTin.Size = new Size(543, 331);
+            pnThongTin.Padding = new Padding(16);
+            pnThongTin.Size = new Size(380, 146);
             pnThongTin.TabIndex = 14;
             // 
             // pnImage
             // 
+            pnImage.BackColor = Color.White;
             pnImage.Controls.Add(pImage);
             pnImage.Controls.Add(label1);
-            pnImage.Location = new Point(27, 22);
+            pnImage.Location = new Point(21, 46);
+            pnImage.Margin = new Padding(2);
             pnImage.Name = "pnImage";
-            pnImage.Size = new Size(540, 353);
+            pnImage.Padding = new Padding(16);
+            pnImage.Size = new Size(378, 212);
             pnImage.TabIndex = 13;
             // 
             // lbSignOutTime
             // 
             lbSignOutTime.AutoSize = true;
             lbSignOutTime.Font = new Font("Segoe UI Variable Display", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbSignOutTime.Location = new Point(662, -142);
+            lbSignOutTime.Location = new Point(463, -85);
+            lbSignOutTime.Margin = new Padding(2, 0, 2, 0);
             lbSignOutTime.Name = "lbSignOutTime";
-            lbSignOutTime.Size = new Size(121, 37);
+            lbSignOutTime.Size = new Size(82, 26);
             lbSignOutTime.TabIndex = 11;
             lbSignOutTime.Text = "Sign out";
             // 
@@ -215,9 +238,10 @@
             // 
             lbSignInTime.AutoSize = true;
             lbSignInTime.Font = new Font("Segoe UI Variable Display", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbSignInTime.Location = new Point(465, -142);
+            lbSignInTime.Location = new Point(326, -85);
+            lbSignInTime.Margin = new Padding(2, 0, 2, 0);
             lbSignInTime.Name = "lbSignInTime";
-            lbSignInTime.Size = new Size(155, 37);
+            lbSignInTime.Size = new Size(105, 26);
             lbSignInTime.TabIndex = 12;
             lbSignInTime.Text = "SignInTime";
             // 
@@ -226,26 +250,39 @@
             _signIoStatus.BackColor = Color.FromArgb(7, 148, 85);
             _signIoStatus.IsManual = false;
             _signIoStatus.IsSignIn = false;
-            _signIoStatus.Location = new Point(196, -126);
+            _signIoStatus.Location = new Point(137, -76);
+            _signIoStatus.Margin = new Padding(1);
             _signIoStatus.Name = "_signIoStatus";
-            _signIoStatus.Size = new Size(124, 37);
+            _signIoStatus.Size = new Size(87, 22);
             _signIoStatus.TabIndex = 10;
             // 
             // lbTitle
             // 
             lbTitle.AutoSize = true;
             lbTitle.Font = new Font("Segoe UI Variable Display", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbTitle.Location = new Point(313, -224);
+            lbTitle.Location = new Point(219, -134);
+            lbTitle.Margin = new Padding(2, 0, 2, 0);
             lbTitle.Name = "lbTitle";
-            lbTitle.Size = new Size(384, 64);
+            lbTitle.Size = new Size(257, 43);
             lbTitle.TabIndex = 9;
             lbTitle.Text = "Chi tiết thông tin";
             // 
+            // panel1
+            // 
+            panel1.Controls.Add(label9);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Padding = new Padding(16);
+            panel1.Size = new Size(380, 60);
+            panel1.TabIndex = 21;
+            // 
             // FormIoLogDetail
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(616, 1263);
+            BackColor = Color.FromArgb(250, 250, 250);
+            ClientSize = new Size(431, 781);
             Controls.Add(pnFormContainer);
             Controls.Add(pnImage);
             Controls.Add(pnThongTin);
@@ -256,15 +293,17 @@
             Controls.Add(lbSignInTime);
             Controls.Add(_signIoStatus);
             Controls.Add(lbTitle);
+            Margin = new Padding(2);
             Name = "FormIoLogDetail";
             Text = "Chi tiết thông tin";
             pnFormContainer.ResumeLayout(false);
-            pnFormContainer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pImage).EndInit();
             pnThongTin.ResumeLayout(false);
             pnThongTin.PerformLayout();
             pnImage.ResumeLayout(false);
             pnImage.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -290,5 +329,6 @@
         private Label lbSignInTime;
         private Hanel_obj.forms.UiSignIOStatus _signIoStatus;
         private Label lbTitle;
+        private Panel panel1;
     }
 }

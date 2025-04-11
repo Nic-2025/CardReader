@@ -27,8 +27,8 @@ namespace IdCard.Hanel_obj.forms
             if (val)
             {
                 lbStatus.Text = "Đã xác minh";
-                lbStatus.ForeColor = ColorTranslator.FromHtml("#ECFDF3");
-                lbStatus.BackColor = ColorTranslator.FromHtml("#079455");
+                lbStatus.ForeColor = ColorTranslator.FromHtml("#079455");
+                lbStatus.BackColor = ColorTranslator.FromHtml("#ECFDF3");
 
                 //lbStatus.BorderStyle = BorderStyle.Parse;
                 //lbStatus.BorderStyle
@@ -36,8 +36,8 @@ namespace IdCard.Hanel_obj.forms
             else
             {
                 lbStatus.Text = "Chưa xác minh";
-                lbStatus.ForeColor = ColorTranslator.FromHtml("#FFF4ED");
-                lbStatus.BackColor = ColorTranslator.FromHtml("#D92D20");
+                lbStatus.ForeColor = ColorTranslator.FromHtml("#D92D20");
+                lbStatus.BackColor = ColorTranslator.FromHtml("#FFF4ED");
             }
         }
 

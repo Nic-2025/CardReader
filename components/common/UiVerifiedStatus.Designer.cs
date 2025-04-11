@@ -35,23 +35,25 @@
             // 
             lbStatus.AutoSize = true;
             lbStatus.BackColor = SystemColors.ActiveCaption;
-            lbStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbStatus.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbStatus.ForeColor = SystemColors.MenuHighlight;
             lbStatus.Location = new Point(0, 0);
+            lbStatus.Margin = new Padding(2, 0, 2, 0);
             lbStatus.Name = "lbStatus";
-            lbStatus.Size = new Size(73, 32);
+            lbStatus.Size = new Size(42, 19);
             lbStatus.TabIndex = 0;
             lbStatus.Text = "None";
             lbStatus.Click += lbStatus_Click;
             // 
             // UiVerifiedStatus
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             Controls.Add(lbStatus);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "UiVerifiedStatus";
-            Size = new Size(187, 35);
+            Size = new Size(131, 21);
             ResumeLayout(false);
             PerformLayout();
         }
