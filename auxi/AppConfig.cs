@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace IdCard.Hanel_obj.auxi
 {
     public class AppConfig
@@ -15,7 +17,7 @@ namespace IdCard.Hanel_obj.auxi
 
         public string GetDatabasePath()
         {
-            return Path.Combine(DataPath, "cardreader.db");
+            return Path.Combine(DataPath, "card_reader.db");
         }
 
 
@@ -38,17 +40,8 @@ namespace IdCard.Hanel_obj.auxi
                 }
 
 
-                //var json = File.ReadAllText(configFilePath);
-                //MessageBox.Show("Json: " + json);
-
-                //appConfig = JsonSerializer.Deserialize<AppConfig>(json);
-                //if (appConfig == null)
-                //{
-                //    MessageBox.Show("Failed to parse configuration file. Using default settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //    // throw new InvalidOperationException("Failed to parse configuration file.");
-                //    return new AppConfig(); // Return a new instance with default values if parsing fails
-                //}
-
+                var json = File.ReadAllText(configFilePath);
+                appConfig = JsonSerializer.Deserialize<AppConfig>(json) ?? new AppConfig();
                 if (string.IsNullOrEmpty(appConfig.DataPath))
                 {
                     appConfig.DataPath = GetDataPath();

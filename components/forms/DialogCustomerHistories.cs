@@ -64,8 +64,30 @@ namespace IdCard.Hanel_obj.components.forms
             // Add more columns as needed
         }
 
+        private void LoadData()
+        {
+            _ctm = ctmRepository.GetCustomerById(_customerId);
+            UpdateInfo();
+
+            if (_ctm == null)
+            {
+                return;
+            }
+            _logs = ioRepository.GetByCCCD(From, To, _customerId);
+            RenderData();
+        }
+
+
         //private void LoadData()
         //{
+        //    if (useMockData)
+        //    {
+        //        GenerateMockData();
+        //        UpdateInfo();
+        //        RenderData();
+        //        return;
+        //    }
+
         //    _ctm = ctmRepository.GetCustomerById(_customerId);
         //    UpdateInfo();
 
@@ -77,27 +99,6 @@ namespace IdCard.Hanel_obj.components.forms
         //    RenderData();
         //}
 
-
-        private void LoadData()
-        {
-            if (useMockData)
-            {
-                GenerateMockData();
-                UpdateInfo();
-                RenderData();
-                return;
-            }
-
-            _ctm = ctmRepository.GetCustomerById(_customerId);
-            UpdateInfo();
-
-            if (_ctm == null)
-            {
-                return;
-            }
-            _logs = ioRepository.GetByCCCD(From, To, _customerId);
-            RenderData();
-        }
 
         private void UpdateInfo()
         {

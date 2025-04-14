@@ -131,7 +131,8 @@ public partial class EKycForm : Form
             {
                 pictureBox1.Image = Image.FromStream(ms);
             }
-        } catch (Exception) { }
+        }
+        catch (Exception) { }
     }
 
     private void textBox2_TextChanged(object sender, EventArgs e)

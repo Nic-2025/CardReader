@@ -2,7 +2,6 @@
 using IdCard.Hanel_obj.auxi;
 using IdCard.Hanel_obj.forms;
 using IdCard.Hanel_obj.reader;
-using System.ComponentModel;
 
 namespace IdCard.Hanel_obj.components.forms
 {
@@ -55,20 +54,20 @@ namespace IdCard.Hanel_obj.components.forms
             this.WindowState = FormWindowState.Maximized;
             this.Load += (s, e) => MonitorForm_Resize(null, null);
 
-            //var formLogin = new FormLogin();
-            //formLogin.ShowDialog();
-            //_user = formLogin.User;
+            var formLogin = new FormLogin();
+            formLogin.ShowDialog();
+            _user = formLogin.User;
 
-            //if (AuthReader.Instance.CardReader.SerialNumber == "")
-            //{
-            //    MessageBox.Show("Không thể tìm thấy thiết bị đọc thẻ. Vui lòng kiểm tra kết nối", "Error",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    AuthReader.Instance.CardReader.OnDetectDevice += OnSerialNumber;
-            //}
-            //else
-            //{
-            //    OnSerialNumber(new ReaderSerial(AuthReader.Instance.CardReader.SerialNumber));
-            //}
+            if (AuthReader.Instance.CardReader.SerialNumber == "")
+            {
+                MessageBox.Show("Không thể tìm thấy thiết bị đọc thẻ. Vui lòng kiểm tra kết nối", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AuthReader.Instance.CardReader.OnDetectDevice += OnSerialNumber;
+            }
+            else
+            {
+                OnSerialNumber(new ReaderSerial(AuthReader.Instance.CardReader.SerialNumber));
+            }
 
         }
 
@@ -103,10 +102,10 @@ namespace IdCard.Hanel_obj.components.forms
 
         private void OnChangeContentType(ContentType newType)
         {
-            //if (_license.Status != LicenseState.Valid)
-            //{
-            //    newType = ContentType.License;
-            //}
+            if (_license?.Status != LicenseState.Valid)
+            {
+                newType = ContentType.License;
+            }
 
             _currentContentType = newType;
             switch (newType)
@@ -237,7 +236,7 @@ namespace IdCard.Hanel_obj.components.forms
 
         private void HandleLicenseActive(auxi.License license)
         {
-            //_license = license;
+            _license = license;
             if (license.Status == auxi.LicenseState.Valid)
             {
                 OnChangeContentType(ContentType.DailyLogbook);
@@ -246,7 +245,6 @@ namespace IdCard.Hanel_obj.components.forms
             {
                 OnChangeContentType(ContentType.License);
             }
-
         }
 
         private void MonitorForm_Resize(object? sender, EventArgs? e)
@@ -286,10 +284,6 @@ namespace IdCard.Hanel_obj.components.forms
 
             btnDailyLog.Width = btnWidth;
             btnDailyLog.Height = 40;
-
-
         }
-
-
     }
 }

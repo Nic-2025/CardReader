@@ -41,7 +41,6 @@ namespace IdCard.Hanel_obj.components.common
             }
         }
 
-
         public void ConfigField()
         {
             this._lbTitle.Text = Field.Label;
