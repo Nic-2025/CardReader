@@ -6,13 +6,23 @@ using IdCard.Hanel_obj.auxi;
 
 namespace IdCard.Hanel_obj.forms
 {
+
+    enum RetryFaceVerify
+    {
+        None,
+        Done,
+        Retry,
+        Rejected,
+        Timeout,
+    }
+
     public partial class UiAuthen : UserControl
     {
         private Customer? _customer = null;
         private InOutLog? _currentLog = null;
         private byte[]? _currentFrame = null;
         private byte[]? _cardImage = null;
-
+        private RetryFaceVerify _retryFace = 0;
 
 
         private readonly AuthReader _reader = AuthReader.Instance;
@@ -83,6 +93,12 @@ namespace IdCard.Hanel_obj.forms
                     return;
                 }
 
+                if (_retryFace == RetryFaceVerify.Rejected)
+                {
+                    return;
+                }
+
+
                 if (_cardImage == null)
                 {
                     MessageBox.Show("Vui lòng chụp ảnh và đọc thẻ chip trước!", "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -114,10 +130,13 @@ namespace IdCard.Hanel_obj.forms
                         {
                             _verifyImage.IsVerified = false;
                             _reader.VideoReader.StartCapture();
+                            _retryFace = RetryFaceVerify.Retry;
                         }
                         else
                         {
                             _verifyImage.IsVerified = false;
+                            _reader.VideoReader.StopCapture();
+                            _retryFace = RetryFaceVerify.Rejected;
                         }
                     }
                 }
@@ -205,6 +224,7 @@ namespace IdCard.Hanel_obj.forms
             _verifyImage.IsVerified = false;
             _cbManual.SelectedIndex = 0;
             _cbManual.Visible = true;
+            _retryFace = RetryFaceVerify.None;
 
 
             lbHoTenVal.Text = "";
