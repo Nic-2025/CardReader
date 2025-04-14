@@ -33,7 +33,6 @@
             panel1 = new Panel();
             btnDelete = new Button();
             btnEdit = new Button();
-            flowPn.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -51,24 +50,24 @@
             // 
             // flowPn
             // 
-            flowPn.Controls.Add(panel1);
             flowPn.FlowDirection = FlowDirection.TopDown;
-            flowPn.Location = new Point(0, 0);
+            flowPn.Location = new Point(2, 54);
             flowPn.Margin = new Padding(2);
             flowPn.Name = "flowPn";
-            flowPn.Size = new Size(380, 60);
+            flowPn.Size = new Size(376, 44);
             flowPn.TabIndex = 1;
             // 
             // panel1
             // 
-            panel1.BackColor = Color.White;
+            panel1.BackColor = Color.FromArgb(250, 250, 250);
             panel1.Controls.Add(btnDelete);
+            panel1.Controls.Add(flowPn);
             panel1.Controls.Add(btnEdit);
             panel1.Controls.Add(_lbTitle);
             panel1.Location = new Point(2, 2);
             panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(378, 85);
+            panel1.Size = new Size(378, 101);
             panel1.TabIndex = 1;
             // 
             // btnDelete
@@ -101,11 +100,11 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(flowPn);
+            Controls.Add(panel1);
             Margin = new Padding(2);
             Name = "UiAdditionField";
-            Size = new Size(380, 69);
-            flowPn.ResumeLayout(false);
+            Size = new Size(380, 107);
+            Load += UiAdditionField_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

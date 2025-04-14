@@ -39,11 +39,13 @@
             btnReports = new Button();
             btnDailyLog = new Button();
             pnContent = new Panel();
-            pnAuth = new Panel();
             pnContentWrapper = new Panel();
+            pnAuth = new Panel();
             sqliteCommand1 = new Microsoft.Data.Sqlite.SqliteCommand();
+            panel1 = new Panel();
             pnNav.SuspendLayout();
             pnContent.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // pnNav
@@ -202,7 +204,7 @@
             // 
             pnContent.BackColor = Color.FromArgb(250, 250, 250);
             pnContent.Controls.Add(pnAuth);
-            pnContent.Controls.Add(pnContentWrapper);
+            pnContent.Controls.Add(panel1);
             pnContent.Location = new Point(280, 0);
             pnContent.Margin = new Padding(0);
             pnContent.Name = "pnContent";
@@ -210,23 +212,23 @@
             pnContent.Size = new Size(1115, 664);
             pnContent.TabIndex = 1;
             // 
+            // pnContentWrapper
+            // 
+            pnContentWrapper.Location = new Point(25, 34);
+            pnContentWrapper.Name = "pnContentWrapper";
+            pnContentWrapper.Size = new Size(213, 212);
+            pnContentWrapper.TabIndex = 0;
+            // 
             // pnAuth
             // 
             pnAuth.AutoScroll = true;
             pnAuth.BackColor = Color.FromArgb(128, 255, 255);
-            pnAuth.Location = new Point(431, 0);
+            pnAuth.Dock = DockStyle.Right;
+            pnAuth.Location = new Point(855, 16);
             pnAuth.Margin = new Padding(2);
             pnAuth.Name = "pnAuth";
             pnAuth.Size = new Size(244, 632);
             pnAuth.TabIndex = 1;
-            pnAuth.Visible = true;
-            // 
-            // pnContentWrapper
-            // 
-            pnContentWrapper.Location = new Point(27, 99);
-            pnContentWrapper.Name = "pnContentWrapper";
-            pnContentWrapper.Size = new Size(737, 303);
-            pnContentWrapper.TabIndex = 0;
             // 
             // sqliteCommand1
             // 
@@ -234,6 +236,15 @@
             sqliteCommand1.Connection = null;
             sqliteCommand1.Transaction = null;
             sqliteCommand1.UpdatedRowSource = System.Data.UpdateRowSource.None;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(pnContentWrapper);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(16, 16);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1083, 632);
+            panel1.TabIndex = 1;
             // 
             // MonitorForm
             // 
@@ -249,6 +260,7 @@
             pnNav.ResumeLayout(false);
             pnNav.PerformLayout();
             pnContent.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -268,5 +280,6 @@
         private Panel horizo;
         private Panel pnContentWrapper;
         private Panel pnAuth;
+        private Panel panel1;
     }
 }

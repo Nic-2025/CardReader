@@ -150,9 +150,9 @@ namespace IdCard.Hanel_obj.components.forms
             // Clear the current content of pnContent
             //pnContent.Controls.Clear();
             pnContentWrapper.Controls.Clear();
-            pnContent.AutoScroll = true;
+            panel1.AutoScroll = true;
 
-            pnContentWrapper.Size = new Size(pnContent.Width - 16, 1500);
+            pnContentWrapper.Size = new Size(panel1.Width - 16, 1500);
             pnContentWrapper.Location = new Point(0, 0);
             pnContentWrapper.Padding = new Padding(16);
 
@@ -207,8 +207,13 @@ namespace IdCard.Hanel_obj.components.forms
 
         private void HandleAuthBegin()
         {
-            pnAuth.Width = 700;
-            pnAuth.Location = new Point(pnContent.Width / 2 - pnAuth.Width / 2, pnContent.Height / 2 - pnAuth.Height / 2);
+            var screen = Screen.FromControl(this);
+            var screenHeight = screen.Bounds.Height;
+            pnAuth.Height = screenHeight;
+            pnAuth.Width = 457;
+            pnAuth.Location = new Point(this.ClientSize.Width - pnAuth.Width - 16, 0);
+
+
         }
 
         private void HandleAuthDone(InOutLog? newLog)
@@ -220,6 +225,13 @@ namespace IdCard.Hanel_obj.components.forms
 
             pnAuth.Width = 1;
             pnAuth.Location = new Point(0, 1);
+            pnAuth.Location = new Point(pnContent.Width / 2 - pnAuth.Width / 2, pnContent.Height / 2 - pnAuth.Height / 2);
+            //var screen = Screen.FromControl(this);
+            //var screenHeight = screen.Bounds.Height;
+
+            //pnAuth.Height = screenHeight;
+            //pnAuth.Width = 457;
+            //pnAuth.Location = new Point(this.ClientSize.Width - pnAuth.Width - 16, 0);
         }
 
 

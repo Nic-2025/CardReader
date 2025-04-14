@@ -31,6 +31,7 @@ namespace IdCard.Hanel_obj.forms
 
         public UiAuthen()
         {
+            this.Dock = DockStyle.Fill;
             InitializeComponent();
             SetupReader();
             EnsureFolderPathExists(ImagePath);
@@ -66,6 +67,8 @@ namespace IdCard.Hanel_obj.forms
             //     newImg.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             //     _currentFrame = ms.ToArray();
             // }
+
+
         }
 
         private void OnResultCamera(CaptureResult ev)

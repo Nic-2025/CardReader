@@ -55,7 +55,7 @@ namespace IdCard.Hanel_obj.components.common
             if (_inputControl != null)
             {
                 flowPn.Controls.Add(_inputControl);
-            }    
+            }
 
         }
 
@@ -212,6 +212,16 @@ namespace IdCard.Hanel_obj.components.common
         }
 
         private void _lbTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void UiAdditionField_Load(object sender, EventArgs e)
         {
 
         }
