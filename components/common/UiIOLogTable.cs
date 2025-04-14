@@ -1,12 +1,16 @@
-﻿using IdCard.Hanel.Models;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using IdCard.Hanel.Models;
 using IdCard.Hanel_obj.components.forms;
-using System.Drawing.Drawing2D;
+using log4net;
+using Microsoft.VisualBasic.Logging;
+using System.Drawing;
 
 namespace IdCard.Hanel_obj.components.common
 {
     public partial class UiIOLogTable : UserControl
     {
         private readonly InOutLogRepository _ioRepo = new(AuthenCardDbContext.Instance);
+        private readonly AdditionFieldRepository _additionFieldRepo = new(AuthenCardDbContext.Instance);
         //private CustomerRepository _ctmRepo = new CustomerRepository(AuthenCardDbContext.Instance);
 
         //int _total = 0;
@@ -224,10 +228,10 @@ namespace IdCard.Hanel_obj.components.common
 
                 using (Brush brushMain = new SolidBrush(e.CellStyle.ForeColor))
                 using (Brush brushSub = new SolidBrush(
-                    subText.Trim().Equals("Hợp lệ", StringComparison.OrdinalIgnoreCase) ? Color.Green : Color.Red))
+                    subText.Trim().Equals("Hợp lệ", StringComparison.OrdinalIgnoreCase) ? System.Drawing.Color.Green : System.Drawing.Color.Red))
                 {
-                    Font fontMain = e.CellStyle.Font;
-                    Font fontSub = new Font(e.CellStyle.Font.FontFamily, e.CellStyle.Font.Size - 1, FontStyle.Regular);
+                    System.Drawing.Font fontMain = e.CellStyle.Font;
+                    System.Drawing.Font fontSub = new(e.CellStyle.Font.FontFamily, e.CellStyle.Font.Size - 1, FontStyle.Regular);
 
                     int totalTextHeight = fontMain.Height + fontSub.Height;
                     int startY = cellBounds.Top + (cellBounds.Height - totalTextHeight) / 2;
@@ -245,7 +249,7 @@ namespace IdCard.Hanel_obj.components.common
                 e.PaintBackground(e.ClipBounds, true);
 
                 string status = e.Value.ToString().ToLower().Trim();
-                Color textColor = Color.Black;
+                System.Drawing.Color textColor = System.Drawing.Color.Black;
                 string displayText = e.Value.ToString();
 
                 switch (status)
@@ -261,11 +265,11 @@ namespace IdCard.Hanel_obj.components.common
                         break;
                 }
 
-                Font font = new Font(e.CellStyle.Font, FontStyle.Bold);
+                System.Drawing.Font font = new(e.CellStyle.Font, FontStyle.Bold);
 
-                using (SolidBrush brush = new SolidBrush(textColor))
+                using (SolidBrush brush = new(textColor))
                 {
-                    StringFormat format = new StringFormat
+                    StringFormat format = new()
                     {
                         Alignment = StringAlignment.Near,          // canh trái (giữ nguyên mặc định)
                         LineAlignment = StringAlignment.Center     // canh giữa theo chiều dọc
@@ -286,8 +290,8 @@ namespace IdCard.Hanel_obj.components.common
                 e.PaintBackground(e.ClipBounds, false);
 
                 string text = e.Value.ToString();
-                Font font = new Font(e.CellStyle.Font, FontStyle.Underline);
-                Color linkColor = Color.Black;
+                System.Drawing.Font font = new(e.CellStyle.Font, FontStyle.Underline);
+                System.Drawing.Color linkColor = System.Drawing.Color.Black;
 
                 using (SolidBrush brush = new SolidBrush(linkColor))
                 {
@@ -320,7 +324,76 @@ namespace IdCard.Hanel_obj.components.common
 
         private void countSignedOut_Click(object sender, EventArgs e)
         {
+            // int row = 8;
+            // worksheet.Cells[4, 2].Value = $"Ngày {From?.ToString("dd/MM/yyyy")}";
+            // worksheet.Cells[5, 2].Value = $"Số lượng: {ioList.Total}";
+        }
 
+        public void WriteToExcel(string excelTemplatePath)
+        {
+            var ioList = _ioRepo.GetList(From, To, 0, 50000, status: _status);
+            var logs = ioList.Data;
+            if (logs == null || logs.Count == 0)
+            {
+                MessageBox.Show("No data to export.", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var fields = _additionFieldRepo.GetList();
+            try
+            {
+                using SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Excel Files|*.xlsx";
+                saveFileDialog.Title = "Save Excel File";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string outputFilePath = saveFileDialog.FileName;
+
+
+                    // Load the template
+                    using (var workbook = new ClosedXML.Excel.XLWorkbook(excelTemplatePath))
+                    {
+                        var worksheet = workbook.Worksheet(1); // Assuming the first sheet
+
+                        // Start writing data from the second row
+                        // int row = 2;
+
+                        for (var i = 0; i < fields.Count; i++)
+                        {
+                            worksheet.Cell(7, 8 + i).Value = fields[i].Label ?? "";
+                        }
+
+                        int row = 8;
+                        worksheet.Cell(4, 2).Value = $"Ngày {From?.ToString("dd/MM/yyyy")}";
+                        worksheet.Cell(5, 2).Value = $"Số lượng: {ioList.Total}";
+                        foreach (var log in logs)
+                        {
+                            worksheet.Cell(row, 2).Value = row - 8 + 1; // Stt
+                            worksheet.Cell(row, 3).Value = log.Customer?.HoTen ?? ""; // Column 1: HoTen
+                            worksheet.Cell(row, 4).Value = log.CustomerId; // Column 2: CCCD
+                            worksheet.Cell(row, 5).Value = log.CheckInTime.ToString("HH:mm"); // Column 3: CheckInTime
+                            worksheet.Cell(row, 6).Value = log.CheckOutTime?.ToString("HH:mm") ?? "--:--"; // Column 4: CheckOutTime
+                            worksheet.Cell(row, 7).Value = log.ManualSignOut == 0 ? "Signed Out" : "Manual Signed Out"; // Column 5: Status
+
+                            for (var i = 0; i < fields.Count; i++)
+                            {
+                                worksheet.Cell(row, 8 + i).Value = log.AdditionFields[fields[i].Label] ?? "";
+                            }
+                            row++;
+                        }
+
+                        // Save the file
+                        workbook.SaveAs(outputFilePath);
+                    }
+
+                    MessageBox.Show("Data exported successfully to Excel.", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while exporting to Excel: {ex.Message}", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 

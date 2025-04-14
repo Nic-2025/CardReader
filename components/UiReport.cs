@@ -1,4 +1,6 @@
-﻿namespace IdCard.Hanel_obj.components
+﻿using IdCard.Hanel_obj.components.common;
+
+namespace IdCard.Hanel_obj.components
 {
     public partial class UiReport : UserControl
     {
@@ -22,6 +24,19 @@
             //from = from.AddHours(-from.Hour);
             uiioLogTable1.From = from;
             uiioLogTable1.To = to;
+        }
+
+        private void BtnExportExcel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                uiioLogTable1.WriteToExcel(@".\public\card_reader_export_excel.xlsx");
+            }
+            catch (Exception ex)
+            {
+                var x = $"{ex}";
+                MessageBox.Show($"Export excel error: {ex}");
+            }
         }
     }
 }
