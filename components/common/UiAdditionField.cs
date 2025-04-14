@@ -1,13 +1,7 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-using IdCard.Hanel.Models;
+﻿using IdCard.Hanel.Models;
 
 namespace IdCard.Hanel_obj.components.common
 {
-
-
     public partial class UiAdditionField : UserControl
     {
         private Control? _inputControl;
@@ -152,6 +146,7 @@ namespace IdCard.Hanel_obj.components.common
 
             if (Field.Type == AdditionFieldType.Dropdrown) // Fix incorrect condition
             {
+                //var field = Field;
                 var cbVal = new ComboBox
                 {
                     Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0),
@@ -208,21 +203,6 @@ namespace IdCard.Hanel_obj.components.common
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             this.OnDelete?.Invoke(Field);
-        }
-
-        private void _lbTitle_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void UiAdditionField_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

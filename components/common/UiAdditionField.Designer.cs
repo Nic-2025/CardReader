@@ -45,15 +45,14 @@
             _lbTitle.Size = new Size(91, 38);
             _lbTitle.TabIndex = 0;
             _lbTitle.Text = "label1";
-            _lbTitle.Click += _lbTitle_Click;
             // 
             // flowPn
             // 
             flowPn.FlowDirection = FlowDirection.TopDown;
-            flowPn.Location = new Point(2, 54);
+            flowPn.Location = new Point(3, 65);
             flowPn.Margin = new Padding(2);
             flowPn.Name = "flowPn";
-            flowPn.Size = new Size(376, 44);
+            flowPn.Size = new Size(437, 44);
             flowPn.TabIndex = 1;
             // 
             // panel1
@@ -63,18 +62,19 @@
             panel1.Controls.Add(flowPn);
             panel1.Controls.Add(btnEdit);
             panel1.Controls.Add(_lbTitle);
-            panel1.Location = new Point(3, 3);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(378, 101);
+            panel1.Size = new Size(499, 180);
             panel1.TabIndex = 1;
             // 
             // btnDelete
             // 
             btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnDelete.ForeColor = Color.Red;
-            btnDelete.Location = new Point(447, 23);
+            btnDelete.Location = new Point(354, 18);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(86, 47);
+            btnDelete.Size = new Size(86, 45);
             btnDelete.TabIndex = 1;
             btnDelete.Text = "Del";
             btnDelete.UseVisualStyleBackColor = true;
@@ -84,9 +84,9 @@
             // 
             btnEdit.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEdit.ForeColor = Color.Blue;
-            btnEdit.Location = new Point(343, 25);
+            btnEdit.Location = new Point(262, 18);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(86, 47);
+            btnEdit.Size = new Size(86, 45);
             btnEdit.TabIndex = 1;
             btnEdit.Text = "Edit";
             btnEdit.UseVisualStyleBackColor = true;
@@ -99,8 +99,7 @@
             Controls.Add(panel1);
             Margin = new Padding(2);
             Name = "UiAdditionField";
-            Size = new Size(380, 107);
-            Load += UiAdditionField_Load;
+            Size = new Size(499, 180);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

@@ -104,7 +104,7 @@
             btnCancel.Location = new Point(254, 477);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(167, 62);
-            btnCancel.TabIndex = 2;
+            btnCancel.TabIndex = 3;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += BtnCancel_Click;

@@ -42,7 +42,6 @@ namespace IdCard.Hanel.Models
 
         private AuthenCardDbContext(DbContextOptions<AuthenCardDbContext> options) : base(options) { }
 
-
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<InOutLog> InOutLogs { get; set; } = null!;
         public DbSet<Customer> Customer { get; set; } = null!;
@@ -104,9 +103,9 @@ namespace IdCard.Hanel.Models
                     new AdditionField {
                         Id = "field3",
                         Require = true,
-                         Label = "Mục đích",
-                         Value = "Thăm thân; Công tác; Khách hàng; Đối tác; Khác",
-                          Notice = "" , SortOrder = 1, Type = AdditionFieldType.Dropdrown }
+                        Label = "Mục đích",
+                        Value = "Thăm thân; Công tác; Khách hàng; Đối tác; Khác",
+                        Notice = "" , SortOrder = 1, Type = AdditionFieldType.Dropdrown }
                 });
                 SaveChanges();
             }

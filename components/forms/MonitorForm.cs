@@ -209,7 +209,7 @@ namespace IdCard.Hanel_obj.components.forms
             var screen = Screen.FromControl(this);
             var screenHeight = screen.Bounds.Height;
             pnAuth.Height = screenHeight;
-            pnAuth.Width = 457;
+            pnAuth.Width = 657;
             pnAuth.Location = new Point(this.ClientSize.Width - pnAuth.Width - 16, 0);
 
 
