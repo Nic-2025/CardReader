@@ -49,7 +49,7 @@ namespace IdCard.Hanel_obj.components.forms
             }
 
             lbHoTenVal.Text = log.Customer?.HoTen ?? "";
-            lbHoTenVal.Text = log.CustomerId ?? "";
+            lbCCCDVal.Text = log.CustomerId ?? "";
 
             CreateFormComponent(log.AdditionFields);
         }

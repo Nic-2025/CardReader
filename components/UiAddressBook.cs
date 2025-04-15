@@ -31,15 +31,15 @@ namespace IdCard.Hanel_obj.components
             dgvCustomer.CellClick += DgvLogIO_MoreDetail;
             dgvCustomer.CellPainting += dgvCustomer_CellPainting;
             dgvCustomer.CellMouseMove += dgvCustomer_CellMouseMove;
+            startDate.ValueChanged += startDate_ValueChanged;
+            endDate.ValueChanged += endDate_ValueChanged;
 
             DateTime now = DateTime.Now;
-            lbDate.Text = $"{now:dd/MM/yyyy}";
             string[] weekdays = { "Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7" };
             string formatted = $"{weekdays[(int)now.DayOfWeek]}, {now:dd/MM/yyyy}";
-            date.Text = formatted;
+            lbDate.Text = formatted;
 
             LoadData(1);
-            //GenerateMockData();
             uiPaginition1.OnPageChanged += OnPageChange;
         }
 
@@ -59,6 +59,7 @@ namespace IdCard.Hanel_obj.components
                 _total = rs.Total;
                 _page = newPage;
                 _customers = rs.Data;
+                int totalVisitCount = 0;
 
                 _dataTables.Clear();
                 for (int i = 0; i < rs.Data.Count; i++)
@@ -70,9 +71,11 @@ namespace IdCard.Hanel_obj.components
                         trans.LatestVisit = latest[0].CheckInTime;
                     }
                     _dataTables.Add(trans);
-
+                    totalVisitCount += trans.TotalVisit;
                 }
                 ManualUpdateData();
+
+                totalVisitor.Text = $"{totalVisitCount} visitor";
             }
             catch (Exception ex)
             {
@@ -103,8 +106,6 @@ namespace IdCard.Hanel_obj.components
             }
         }
 
-
-
         private void DgvLogIO_MoreDetail(object? sender, DataGridViewCellEventArgs e)
         {
             // Check if the clicked cell is in the action button column
@@ -123,48 +124,33 @@ namespace IdCard.Hanel_obj.components
             }
         }
 
-        private void DtFilter_ValueChanged(object sender, EventArgs e)
+        private void UpdateDateRangeFilter()
         {
-            _from = dtFilter.Value.Date;
-            _to = dtFilter.Value.Date.AddDays(1).AddSeconds(-1);
+            if (endDate.Value.Date < startDate.Value.Date)
+            {
+                MessageBox.Show("Ngày kết thúc không được nhỏ hơn ngày bắt đầu.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            _from = startDate.Value.Date;
+            _to = endDate.Value.Date.AddDays(1).AddSeconds(-1);
             LoadData(_page);
         }
+
+        private void startDate_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateDateRangeFilter();
+        }
+
+        private void endDate_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateDateRangeFilter();
+        }
+
 
         private void lbDate_Click(object sender, EventArgs e)
         {
 
-        }
-
-
-        private void GenerateMockData()
-        {
-            _dataTables.Clear();
-            _customers.Clear();
-
-            for (int i = 1; i <= 100; i++)
-            {
-                var mockCustomer = new CustomerExtend
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    HoTen = $"Khách hàng {i}",
-                    CreatedAt = DateTime.Today.AddDays(-i),
-                    InOutLogCount = i % 10 + 1,
-                    InOutLogs = new List<InOutLog>
-            {
-                new InOutLog { CheckInTime = DateTime.Today.AddMinutes(-i * 10) }
-            }
-                };
-
-                _customers.Add(mockCustomer);
-
-                var trans = new CustomerTransformTable(i, mockCustomer);
-                _dataTables.Add(trans);
-            }
-
-            uiPaginition1.TotalPages = (_dataTables.Count + _pageSize - 1) / _pageSize;
-            uiPaginition1.CurrentPage = 1;
-
-            ManualUpdateData();
         }
 
         private void panel4_Paint(object sender, PaintEventArgs e)
@@ -174,7 +160,7 @@ namespace IdCard.Hanel_obj.components
 
         private void dgvCustomer_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-          
+
 
             if (e.RowIndex >= 0 && dgvCustomer.Columns[e.ColumnIndex].Name == "BtnMoreDetail" && e.Value != null)
             {
@@ -214,10 +200,7 @@ namespace IdCard.Hanel_obj.components
             }
         }
 
-
     }
-
-
 
     public class CustomerTransformTable
     {

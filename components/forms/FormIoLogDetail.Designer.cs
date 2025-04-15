@@ -34,6 +34,7 @@
             label9 = new Label();
             lbSignOutValue = new Label();
             pnFormContainer = new Panel();
+            panel1 = new Panel();
             label4 = new Label();
             lbCCCDVal = new Label();
             lbHoTenVal = new Label();
@@ -47,12 +48,12 @@
             lbSignInTime = new Label();
             _signIoStatus = new IdCard.Hanel_obj.forms.UiSignIOStatus();
             lbTitle = new Label();
-            panel1 = new Panel();
+            button1 = new Button();
             pnFormContainer.SuspendLayout();
+            panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pImage).BeginInit();
             pnThongTin.SuspendLayout();
             pnImage.SuspendLayout();
-            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // _cbManual
@@ -120,6 +121,16 @@
             pnFormContainer.Name = "pnFormContainer";
             pnFormContainer.Size = new Size(380, 261);
             pnFormContainer.TabIndex = 15;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(label9);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Padding = new Padding(16);
+            panel1.Size = new Size(380, 60);
+            panel1.TabIndex = 21;
             // 
             // label4
             // 
@@ -267,22 +278,26 @@
             lbTitle.TabIndex = 9;
             lbTitle.Text = "Chi tiết thông tin";
             // 
-            // panel1
+            // button1
             // 
-            panel1.Controls.Add(label9);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Padding = new Padding(16);
-            panel1.Size = new Size(380, 60);
-            panel1.TabIndex = 21;
+            button1.BackColor = Color.Red;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(277, 742);
+            button1.Name = "button1";
+            button1.Size = new Size(122, 32);
+            button1.TabIndex = 21;
+            button1.Text = "Manual Sign out";
+            button1.UseVisualStyleBackColor = false;
             // 
             // FormIoLogDetail
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(250, 250, 250);
-            ClientSize = new Size(431, 781);
+            ClientSize = new Size(431, 786);
+            Controls.Add(button1);
             Controls.Add(pnFormContainer);
             Controls.Add(pnImage);
             Controls.Add(pnThongTin);
@@ -297,13 +312,13 @@
             Name = "FormIoLogDetail";
             Text = "Chi tiết thông tin";
             pnFormContainer.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pImage).EndInit();
             pnThongTin.ResumeLayout(false);
             pnThongTin.PerformLayout();
             pnImage.ResumeLayout(false);
             pnImage.PerformLayout();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -330,5 +345,6 @@
         private Hanel_obj.forms.UiSignIOStatus _signIoStatus;
         private Label lbTitle;
         private Panel panel1;
+        private Button button1;
     }
 }

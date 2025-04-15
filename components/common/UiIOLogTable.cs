@@ -1,9 +1,8 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using IdCard.Hanel.Models;
 using IdCard.Hanel_obj.components.forms;
-using log4net;
-using Microsoft.VisualBasic.Logging;
-using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 
 namespace IdCard.Hanel_obj.components.common
 {
@@ -72,7 +71,6 @@ namespace IdCard.Hanel_obj.components.common
             int skip = (newPage - 1) * Limit;
             var rs = _ioRepo.GetList(From, To, skip, Limit, status: _status);
 
-
             _logs = rs.Data;
 
             uiPaginition1.CurrentPage = newPage;
@@ -81,6 +79,14 @@ namespace IdCard.Hanel_obj.components.common
             _logTrans.Clear();
             for (int i = 0; i < _logs.Count; i++)
                 _logTrans.Add(new LogTransform(_logs[i], rs.Total - i - skip));
+
+            int total = rs.Total;
+            int signedIn = rs.Data.Count(x => x.CheckOutTime == null);
+            int signedOut = rs.Data.Count(x => x.CheckOutTime != null);
+
+            countAll.Text = $"{total}";
+            countSignedIn.Text = $"{signedIn}";
+            countSignedOut.Text = $"{signedOut}";
 
             this.ManualUpdateData(skip);
 
@@ -122,7 +128,7 @@ namespace IdCard.Hanel_obj.components.common
 
                 row.Cells["STT"].Value = log.STT;
                 row.Cells["HoTen"].Value = log.HoTen;
-                row.Cells["CCCD"].Value = log.CCCD + "\n" + (false ? "Hợp lệ" : "Không hợp lệ");
+                row.Cells["CCCD"].Value = log.CCCD;
                 row.Cells["CCCD"].Style.WrapMode = DataGridViewTriState.True;
                 row.Cells["SignedIn"].Value = log.SignedIn;
                 row.Cells["SignedOut"].Value = log.SignedOut;
@@ -153,8 +159,11 @@ namespace IdCard.Hanel_obj.components.common
             {
                 var log = _logs[e.RowIndex];
                 var formDetail = new FormIoLogDetail(log.Id);
-                formDetail.Width = 600; formDetail.Height = 1200;
+                formDetail.Width = 457; 
+                formDetail.Height = 1000;
+                formDetail.StartPosition = FormStartPosition.CenterScreen;
                 formDetail.ShowDialog();
+
             }
         }
 
@@ -213,36 +222,6 @@ namespace IdCard.Hanel_obj.components.common
 
         private void dgvLogIO_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.RowIndex >= 0 && dgvLogIO.Columns[e.ColumnIndex].Name == "CCCD" && e.Value != null)
-            {
-                e.Handled = true;
-                e.PaintBackground(e.ClipBounds, true);
-
-                string fullText = e.Value.ToString();
-                string[] parts = fullText.Split(new[] { "\n" }, StringSplitOptions.None);
-                string mainText = parts[0];
-                string subText = parts.Length > 1 ? parts[1] : "";
-
-                var cellBounds = e.CellBounds;
-                var paddingLeft = cellBounds.Left + 4;
-
-                using (Brush brushMain = new SolidBrush(e.CellStyle.ForeColor))
-                using (Brush brushSub = new SolidBrush(
-                    subText.Trim().Equals("Hợp lệ", StringComparison.OrdinalIgnoreCase) ? System.Drawing.Color.Green : System.Drawing.Color.Red))
-                {
-                    System.Drawing.Font fontMain = e.CellStyle.Font;
-                    System.Drawing.Font fontSub = new(e.CellStyle.Font.FontFamily, e.CellStyle.Font.Size - 1, FontStyle.Regular);
-
-                    int totalTextHeight = fontMain.Height + fontSub.Height;
-                    int startY = cellBounds.Top + (cellBounds.Height - totalTextHeight) / 2;
-
-                    e.Graphics.DrawString(mainText, fontMain, brushMain, paddingLeft, startY);
-                    e.Graphics.DrawString(subText, fontSub, brushSub, paddingLeft, startY + fontMain.Height);
-                }
-
-                e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
-            }
-
             if (e.RowIndex >= 0 && dgvLogIO.Columns[e.ColumnIndex].Name == "TrangThai" && e.Value != null)
             {
                 e.Handled = true;

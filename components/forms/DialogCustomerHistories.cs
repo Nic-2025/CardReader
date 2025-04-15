@@ -47,7 +47,7 @@ namespace IdCard.Hanel_obj.components.forms
         {
             _fields = fieldsRepository.GetList();
             dgvHistories.Columns.Clear();
-            dgvHistories.Columns.Add("VisitDay", "Ngay visit");
+            dgvHistories.Columns.Add("VisitDay", "Ngày visit");
             dgvHistories.Columns.Add("SignedIn", "Signed In");
             dgvHistories.Columns.Add("SignedOut", "Signed out");
 
@@ -128,7 +128,7 @@ namespace IdCard.Hanel_obj.components.forms
 
                 row.Cells["VisitDay"].Value = log.CheckInTime.ToString("yyyy-MM-dd");
                 row.Cells["SignedIn"].Value = log.CheckInTime.ToString("HH:mm");
-                row.Cells["SignedOut"].Value = log.CheckOutTime != null ? log.CheckInTime.ToString("HH:mm") : "--:--";
+                row.Cells["SignedOut"].Value = log.CheckOutTime != null ? log.CheckOutTime.Value.ToString("HH:mm") : "--:--";
 
                 for (int j = 0; j < _fields.Count; j++)
                 {

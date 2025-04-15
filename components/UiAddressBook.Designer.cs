@@ -41,15 +41,17 @@ namespace IdCard.Hanel_obj.components
             TotalVisit = new DataGridViewTextBoxColumn();
             BtnMoreDetail = new DataGridViewTextBoxColumn();
             uiPaginition1 = new UiPaginition();
-            dtFilter = new DateTimePicker();
+            startDate = new DateTimePicker();
             panel1 = new Panel();
+            label3 = new Label();
+            label2 = new Label();
+            endDate = new DateTimePicker();
             panel2 = new Panel();
-            date = new Label();
             lbDate = new Label();
             panel3 = new Panel();
             panel4 = new Panel();
             panel5 = new Panel();
-            label2 = new Label();
+            totalVisitor = new Label();
             label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvCustomer).BeginInit();
             panel1.SuspendLayout();
@@ -160,20 +162,24 @@ namespace IdCard.Hanel_obj.components
             uiPaginition1.TabIndex = 2;
             uiPaginition1.TotalPages = 0;
             // 
-            // dtFilter
+            // startDate
             // 
-            dtFilter.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtFilter.Location = new Point(0, 80);
-            dtFilter.Margin = new Padding(2);
-            dtFilter.Name = "dtFilter";
-            dtFilter.Size = new Size(211, 25);
-            dtFilter.TabIndex = 4;
-            dtFilter.ValueChanged += DtFilter_ValueChanged;
+            startDate.CustomFormat = "dd/MM/yyyy";
+            startDate.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            startDate.Format = DateTimePickerFormat.Custom;
+            startDate.Location = new Point(2, 75);
+            startDate.Margin = new Padding(2);
+            startDate.Name = "startDate";
+            startDate.Size = new Size(107, 25);
+            startDate.TabIndex = 4;
             // 
             // panel1
             // 
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(endDate);
             panel1.Controls.Add(panel2);
-            panel1.Controls.Add(dtFilter);
+            panel1.Controls.Add(startDate);
             panel1.Controls.Add(_lbTitle);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -181,35 +187,55 @@ namespace IdCard.Hanel_obj.components
             panel1.Size = new Size(1281, 105);
             panel1.TabIndex = 5;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 10F);
+            label3.Location = new Point(114, 53);
+            label3.Name = "label3";
+            label3.Size = new Size(68, 19);
+            label3.TabIndex = 8;
+            label3.Text = "Đến ngày";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 10F);
+            label2.Location = new Point(2, 54);
+            label2.Name = "label2";
+            label2.Size = new Size(58, 19);
+            label2.TabIndex = 7;
+            label2.Text = "Từ ngày";
+            // 
+            // endDate
+            // 
+            endDate.CustomFormat = "dd/MM/yyyy";
+            endDate.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            endDate.Format = DateTimePickerFormat.Custom;
+            endDate.Location = new Point(114, 75);
+            endDate.Name = "endDate";
+            endDate.Size = new Size(107, 25);
+            endDate.TabIndex = 6;
+            endDate.ValueChanged += endDate_ValueChanged;
+            // 
             // panel2
             // 
-            panel2.Controls.Add(date);
             panel2.Controls.Add(lbDate);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(1138, 0);
+            panel2.Location = new Point(1088, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(143, 105);
+            panel2.Size = new Size(193, 105);
             panel2.TabIndex = 5;
-            // 
-            // date
-            // 
-            date.AutoSize = true;
-            date.Font = new Font("Segoe UI", 10F);
-            date.Location = new Point(3, 47);
-            date.Name = "date";
-            date.Size = new Size(45, 19);
-            date.TabIndex = 7;
-            date.Text = "label1";
             // 
             // lbDate
             // 
             lbDate.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbDate.AutoSize = true;
-            lbDate.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbDate.Location = new Point(2, 17);
+            lbDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbDate.Location = new Point(2, 72);
             lbDate.Margin = new Padding(2, 0, 2, 0);
             lbDate.Name = "lbDate";
-            lbDate.Size = new Size(60, 30);
+            lbDate.Size = new Size(51, 25);
             lbDate.TabIndex = 6;
             lbDate.Text = "time";
             lbDate.Click += lbDate_Click;
@@ -237,7 +263,7 @@ namespace IdCard.Hanel_obj.components
             // 
             // panel5
             // 
-            panel5.Controls.Add(label2);
+            panel5.Controls.Add(totalVisitor);
             panel5.Controls.Add(label1);
             panel5.Dock = DockStyle.Left;
             panel5.Location = new Point(0, 0);
@@ -245,15 +271,15 @@ namespace IdCard.Hanel_obj.components
             panel5.Size = new Size(148, 69);
             panel5.TabIndex = 3;
             // 
-            // label2
+            // totalVisitor
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label2.Location = new Point(61, 25);
-            label2.Name = "label2";
-            label2.Size = new Size(66, 15);
-            label2.TabIndex = 1;
-            label2.Text = "120 visitor";
+            totalVisitor.AutoSize = true;
+            totalVisitor.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            totalVisitor.Location = new Point(61, 25);
+            totalVisitor.Name = "totalVisitor";
+            totalVisitor.Size = new Size(66, 15);
+            totalVisitor.TabIndex = 1;
+            totalVisitor.Text = "120 visitor";
             // 
             // label1
             // 
@@ -297,15 +323,17 @@ namespace IdCard.Hanel_obj.components
         private DataGridViewTextBoxColumn LatestVisit;
         private DataGridViewTextBoxColumn TotalVisit;
         private DataGridViewTextBoxColumn BtnMoreDetail;
-        private DateTimePicker dtFilter;
+        private DateTimePicker startDate;
         private Panel panel1;
         private Panel panel2;
         private Panel panel3;
         private Panel panel4;
-        private Label date;
         private Label lbDate;
         private Panel panel5;
-        private Label label2;
+        private Label totalVisitor;
         private Label label1;
+        private DateTimePicker endDate;
+        private Label label3;
+        private Label label2;
     }
 }

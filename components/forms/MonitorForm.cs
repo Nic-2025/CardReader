@@ -55,6 +55,7 @@ namespace IdCard.Hanel_obj.components.forms
             this.Load += (s, e) => MonitorForm_Resize(null, null);
 
             var formLogin = new FormLogin();
+            formLogin.StartPosition = FormStartPosition.CenterScreen;
             formLogin.ShowDialog();
             _user = formLogin.User;
 
@@ -102,10 +103,10 @@ namespace IdCard.Hanel_obj.components.forms
 
         private void OnChangeContentType(ContentType newType)
         {
-            if (_license?.Status != LicenseState.Valid)
-            {
-                newType = ContentType.License;
-            }
+            //if (_license?.Status != LicenseState.Valid)
+            //{
+            //    newType = ContentType.License;
+            //}
 
             _currentContentType = newType;
             switch (newType)

@@ -36,8 +36,10 @@
             panel6 = new Panel();
             btnExportExcel = new Button();
             panel5 = new Panel();
-            textBox1 = new TextBox();
-            dateTimePicker1 = new DateTimePicker();
+            label2 = new Label();
+            label1 = new Label();
+            endDate = new DateTimePicker();
+            startDate = new DateTimePicker();
             panel2 = new Panel();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -125,8 +127,10 @@
             // 
             // panel5
             // 
-            panel5.Controls.Add(textBox1);
-            panel5.Controls.Add(dateTimePicker1);
+            panel5.Controls.Add(label2);
+            panel5.Controls.Add(label1);
+            panel5.Controls.Add(endDate);
+            panel5.Controls.Add(startDate);
             panel5.Dock = DockStyle.Left;
             panel5.Location = new Point(0, 0);
             panel5.Margin = new Padding(4, 5, 4, 5);
@@ -134,24 +138,45 @@
             panel5.Size = new Size(751, 95);
             panel5.TabIndex = 9;
             // 
-            // textBox1
+            // label2
             // 
-            textBox1.Location = new Point(0, 25);
-            textBox1.Margin = new Padding(4, 5, 4, 5);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(320, 39);
-            textBox1.TabIndex = 7;
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 10F);
+            label2.Location = new Point(111, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(68, 19);
+            label2.TabIndex = 3;
+            label2.Text = "Đến ngày";
             // 
-            // dateTimePicker1
+            // label1
             // 
-            dateTimePicker1.CalendarFont = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dateTimePicker1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dateTimePicker1.Location = new Point(334, 25);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(300, 34);
-            dateTimePicker1.TabIndex = 0;
-            dateTimePicker1.ValueChanged += DateTimePicker1_ValueChanged;
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 10F);
+            label1.Location = new Point(0, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(58, 19);
+            label1.TabIndex = 2;
+            label1.Text = "Từ ngày";
+            // 
+            // endDate
+            // 
+            endDate.Font = new Font("Segoe UI", 10F);
+            endDate.Location = new Point(111, 23);
+            endDate.Name = "endDate";
+            endDate.Size = new Size(107, 25);
+            endDate.TabIndex = 1;
+            endDate.ValueChanged += endDate_ValueChanged;
+            // 
+            // startDate
+            // 
+            startDate.CalendarFont = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            startDate.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            startDate.Location = new Point(-1, 23);
+            startDate.Margin = new Padding(2);
+            startDate.Name = "startDate";
+            startDate.Size = new Size(107, 25);
+            startDate.TabIndex = 0;
+            startDate.ValueChanged += DateTimePicker1_ValueChanged;
             // 
             // panel2
             // 
@@ -187,13 +212,15 @@
         private Label _lbTitle;
         private common.UiIOLogTable uiioLogTable1;
         private Panel panel1;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker startDate;
         private Panel panel2;
         private Panel panel3;
-        private TextBox textBox1;
         private Panel panel4;
         private Panel panel5;
         private Panel panel6;
-        private Button btnExportExcel;
+        private Button button1;
+        private DateTimePicker endDate;
+        private Label label2;
+        private Label label1;
     }
 }
