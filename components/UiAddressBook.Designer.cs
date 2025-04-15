@@ -121,7 +121,8 @@ namespace IdCard.Hanel_obj.components
             // STT
             // 
             STT.HeaderText = "STT";
-            STT.MinimumWidth = 8;
+            STT.MinimumWidth = 2;
+            STT.Width = 60;
             STT.Name = "STT";
             // 
             // FullName

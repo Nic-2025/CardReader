@@ -12,17 +12,6 @@ namespace IdCard.Hanel_obj.components
             UpdateTimeFilter();
         }
 
-        private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateTimeFilter();
-        }
-
-        private void endDate_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateTimeFilter();
-        }
-
-
         private void UpdateTimeFilter()
         {
             if (endDate.Value.Date < startDate.Value.Date)
@@ -37,6 +26,28 @@ namespace IdCard.Hanel_obj.components
             uiioLogTable1.From = from;
             uiioLogTable1.To = to;
         }
-       
+
+        private void BtnExportExcel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                uiioLogTable1.WriteToExcel(@".\public\card_reader_export_excel.xlsx");
+            }
+            catch (Exception ex)
+            {
+                var x = $"{ex}";
+                MessageBox.Show($"Export excel error: {ex}");
+            }
+        }
+
+        private void startDate_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateTimeFilter();
+        }
+
+        private void endDate_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateTimeFilter();
+        }
     }
 }
