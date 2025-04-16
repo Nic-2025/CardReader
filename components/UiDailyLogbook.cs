@@ -43,15 +43,9 @@ namespace IdCard.Hanel_obj.components
             }
         }
 
-        private void uiioLogTable1_Load(object sender, EventArgs e)
+        private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-
+            uiioLogTable2.Search = txtSearch.Text;
         }
-
-        private void panel5_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
     }
 }

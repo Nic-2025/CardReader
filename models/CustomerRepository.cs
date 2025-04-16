@@ -46,7 +46,7 @@ namespace IdCard.Hanel.Models
             return customer;
         }
 
-        public DataWCount<CustomerExtend> GetCustomers(DateTime? from, DateTime? to, int skip = 0, int limit = 10)
+        public DataWCount<CustomerExtend> GetCustomers(DateTime? from, DateTime? to, int skip = 0, int limit = 10, string? search = null)
         {
             var query = _context.Set<Customer>()
                                 .Include(c => c.InOutLogs) // Assuming InOutLogs is a navigation property
@@ -60,6 +60,11 @@ namespace IdCard.Hanel.Models
             if (to.HasValue)
             {
                 query = query.Where(c => c.InOutLogs != null && c.InOutLogs.Any(log => log.CheckInTime <= to.Value));
+            }
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(c => c.HoTen != null && c.HoTen.Contains(search));
             }
 
             var totalCount = query.Count();
@@ -76,7 +81,6 @@ namespace IdCard.Hanel.Models
             };
         }
     }
-
     public class CustomerExtend : Customer
     {
         public int InOutLogCount { get; set; }

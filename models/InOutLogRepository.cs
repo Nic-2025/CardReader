@@ -33,13 +33,22 @@ namespace IdCard.Hanel.Models
         }
 
         // Get a paginated list of InOutLogs filtered by date range and CCCD
-        public DataWCount<InOutLog> GetList(DateTime? from, DateTime? to, int skip, int limit, string? cccd = null, IOStatus? status = null)
+        public DataWCount<InOutLog> GetList(DateTime? from, DateTime? to, int skip, int limit, string? cccd = null, IOStatus? status = null, string? hoTen = null)
         {
+            // Check if the date range is valid
+            if (from.HasValue && to.HasValue && from.Value > to.Value)
+            {
+                MessageBox.Show("Ngày bắt đầu không được lớn hơn ngày kết thúc", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return new DataWCount<InOutLog> { Total = 0, Data = new List<InOutLog>() };
+            }
+
+            // Build the query with filtering and pagination
             var query = _context.InOutLogs
                 .Include(log => log.Customer) // Include Customer in the query
                 .Where(log => (!from.HasValue || log.CheckInTime >= from.Value)
                            && (!to.HasValue || log.CheckInTime <= to.Value)
                            && (string.IsNullOrEmpty(cccd) || log.CustomerId == cccd) &&
+                           (string.IsNullOrEmpty(hoTen) || (log.Customer != null && log.Customer.HoTen != null && log.Customer.HoTen.Contains(hoTen))) &&
                            (!status.HasValue || (status == IOStatus.SignIn && log.CheckOutTime == null) ||
                             (status == IOStatus.SignOut && log.CheckOutTime != null)));
 
@@ -56,6 +65,8 @@ namespace IdCard.Hanel.Models
                 Data = data
             };
         }
+
+
 
         // Get an InOutLog by ID
         public InOutLog? GetById(string logId)

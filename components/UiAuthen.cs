@@ -78,8 +78,6 @@ namespace IdCard.Hanel_obj.forms
             //     newImg.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             //     _currentFrame = ms.ToArray();
             // }
-
-
         }
 
         private void OnResultCamera(CaptureResult ev)
@@ -98,6 +96,12 @@ namespace IdCard.Hanel_obj.forms
                 {
                     return;
                 }
+
+                if (_retryFace == RetryFaceVerify.Retry)
+                {
+                    return;
+                }
+                _retryFace = RetryFaceVerify.None;
 
 
                 if (_cardImage == null)
@@ -132,6 +136,15 @@ namespace IdCard.Hanel_obj.forms
                             _verifyImage.IsVerified = false;
                             _reader.VideoReader.StartCapture();
                             _retryFace = RetryFaceVerify.Retry;
+                            _retryFace = RetryFaceVerify.Retry;
+                            Task.Delay(1200).ContinueWith(_ =>
+                            {
+                                if (_retryFace == RetryFaceVerify.Retry)
+                                {
+                                    _retryFace = RetryFaceVerify.None;
+                                }
+                            });
+
                         }
                         else
                         {

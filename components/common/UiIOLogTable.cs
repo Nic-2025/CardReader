@@ -18,6 +18,7 @@ namespace IdCard.Hanel_obj.components.common
         DateTime? _from;
         DateTime? _to;
         IOStatus? _status;
+        string _searchHoTen = "";
 
         private List<InOutLog> _logs = new List<InOutLog>();
         private List<LogTransform> _logTrans = new List<LogTransform>();
@@ -26,9 +27,11 @@ namespace IdCard.Hanel_obj.components.common
         public DateTime? To { set => SetTo(value); get => _to; }
         public IOStatus? Status { set => SetStatus(value); get => _status; }
 
+        public string Search { set => SetSearch(value); get => _searchHoTen; }
+
         public int CurrentPage { get => uiPaginition1.CurrentPage; }
 
-        private List<InOutLog> _mockLogs = new List<InOutLog>();
+        private List<InOutLog> _mockLogs = new();
 
 
         public int Limit { get; set; } = 10;
@@ -69,7 +72,7 @@ namespace IdCard.Hanel_obj.components.common
         public DataWCount<InOutLog> LoadData(int newPage)
         {
             int skip = (newPage - 1) * Limit;
-            var rs = _ioRepo.GetList(From, To, skip, Limit, status: _status);
+            var rs = _ioRepo.GetList(From, To, skip, Limit, status: _status, hoTen: _searchHoTen != "" ? _searchHoTen : null);
 
             _logs = rs.Data;
 
@@ -115,6 +118,16 @@ namespace IdCard.Hanel_obj.components.common
             //this.LoadMockPagedData(1);
 
         }
+
+
+        private void SetSearch(string value)
+        {
+            _searchHoTen = value;
+            this.LoadData(1);
+            //this.LoadMockPagedData(1);
+
+        }
+
 
         private void ManualUpdateData(int skip)
         {
@@ -319,9 +332,10 @@ namespace IdCard.Hanel_obj.components.common
             var fields = _additionFieldRepo.GetList();
             try
             {
-                using SaveFileDialog saveFileDialog = new SaveFileDialog();
+                using SaveFileDialog saveFileDialog = new();
                 saveFileDialog.Filter = "Excel Files|*.xlsx";
                 saveFileDialog.Title = "Save Excel File";
+                saveFileDialog.FileName = $"Export_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
