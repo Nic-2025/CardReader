@@ -59,7 +59,6 @@ namespace IdCard.Hanel_obj.components
                 _total = rs.Total;
                 _page = newPage;
                 _customers = rs.Data;
-                int totalVisitCount = 0;
 
                 _dataTables.Clear();
                 for (int i = 0; i < rs.Data.Count; i++)
@@ -71,11 +70,10 @@ namespace IdCard.Hanel_obj.components
                         trans.LatestVisit = latest[0].CheckInTime;
                     }
                     _dataTables.Add(trans);
-                    totalVisitCount += trans.TotalVisit;
                 }
                 ManualUpdateData();
 
-                totalVisitor.Text = $"{totalVisitCount} visitor";
+                totalVisitor.Text = $"{rs.Total} visitor";
             }
             catch (Exception ex)
             {

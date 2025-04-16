@@ -50,6 +50,10 @@ namespace IdCard.Hanel_obj.components.forms
 
             lbHoTenVal.Text = log.Customer?.HoTen ?? "";
             lbCCCDVal.Text = log.CustomerId ?? "";
+            lbSignInValue.Text = log?.CheckInTime.ToString("HH:mm") ?? "--:--";
+            lbSignOutValue.Text = log?.CheckOutTime?.ToString("HH:mm") ?? "--:--";
+
+            manuaSignOut.Visible = !log.CheckOutTime.HasValue;
 
             CreateFormComponent(log.AdditionFields);
         }

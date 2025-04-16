@@ -139,7 +139,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F);
-            label2.Location = new Point(142, 1);
+            label2.Location = new Point(133, 1);
             label2.Name = "label2";
             label2.Size = new Size(68, 19);
             label2.TabIndex = 10;
@@ -151,7 +151,7 @@
             endDate.CustomFormat = "dd/MM/yyyy";
             endDate.Font = new Font("Segoe UI", 10F);
             endDate.Format = DateTimePickerFormat.Custom;
-            endDate.Location = new Point(142, 23);
+            endDate.Location = new Point(133, 23);
             endDate.Name = "endDate";
             endDate.Size = new Size(120, 25);
             endDate.TabIndex = 1;
@@ -161,7 +161,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10F);
-            label1.Location = new Point(12, 0);
+            label1.Location = new Point(3, 0);
             label1.Name = "label1";
             label1.Size = new Size(58, 19);
             label1.TabIndex = 9;
@@ -173,7 +173,7 @@
             startDate.CustomFormat = "dd/MM/yyyy";
             startDate.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             startDate.Format = DateTimePickerFormat.Custom;
-            startDate.Location = new Point(12, 23);
+            startDate.Location = new Point(3, 23);
             startDate.Margin = new Padding(2);
             startDate.Name = "startDate";
             startDate.Size = new Size(125, 25);

@@ -47,6 +47,7 @@ namespace IdCard.Hanel_obj.forms
             EnsureFolderPathExists(ImagePath);
             ResetState();
             this.Hide();
+
         }
 
         public void Close()
@@ -357,6 +358,7 @@ namespace IdCard.Hanel_obj.forms
                 //{
                 //    Dock = DockStyle.Top
                 //};
+                uiField.Width = pnFormField.ClientSize.Width - 8;
                 pnFormField.Controls.Add(uiField);
             }
         }
@@ -415,5 +417,9 @@ namespace IdCard.Hanel_obj.forms
 
         }
 
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

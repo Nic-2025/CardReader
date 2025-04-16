@@ -47,8 +47,9 @@
             panel1 = new Panel();
             label9 = new Label();
             pnFormField = new FlowLayoutPanel();
-            btnSave = new Button();
+            panel2 = new Panel();
             btnCancel = new Button();
+            btnSave = new Button();
             lbSignInValue = new Label();
             lbSignOutValue = new Label();
             _cbManual = new ComboBox();
@@ -57,6 +58,7 @@
             pnThongTin.SuspendLayout();
             pnFormContainer.SuspendLayout();
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // lbTitle
@@ -121,7 +123,7 @@
             // 
             // pImage
             // 
-            pImage.Location = new Point(99, 51);
+            pImage.Location = new Point(89, 51);
             pImage.Margin = new Padding(2);
             pImage.Name = "pImage";
             pImage.Size = new Size(233, 143);
@@ -253,6 +255,7 @@
             panel1.Padding = new Padding(16);
             panel1.Size = new Size(422, 60);
             panel1.TabIndex = 2;
+            panel1.Paint += panel1_Paint;
             // 
             // label9
             // 
@@ -268,31 +271,26 @@
             // pnFormField
             // 
             pnFormField.AutoScroll = true;
+            pnFormField.AutoSize = true;
             pnFormField.BackColor = Color.FromArgb(250, 250, 250);
             pnFormField.Dock = DockStyle.Fill;
             pnFormField.FlowDirection = FlowDirection.TopDown;
             pnFormField.Location = new Point(0, 0);
             pnFormField.Name = "pnFormField";
-            pnFormField.Padding = new Padding(0, 60, 0, 0);
+            pnFormField.Padding = new Padding(0, 60, 0, 40);
             pnFormField.Size = new Size(422, 383);
             pnFormField.TabIndex = 1;
             pnFormField.WrapContents = false;
             // 
-            // btnSave
+            // panel2
             // 
-            btnSave.BackColor = Color.SteelBlue;
-            btnSave.FlatAppearance.BorderSize = 0;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 14F);
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(334, 950);
-            btnSave.Margin = new Padding(2);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(105, 42);
-            btnSave.TabIndex = 6;
-            btnSave.Text = "Lưu";
-            btnSave.UseVisualStyleBackColor = false;
-            btnSave.Click += BtnSave_Click;
+            panel2.Controls.Add(btnCancel);
+            panel2.Controls.Add(btnSave);
+            panel2.Dock = DockStyle.Bottom;
+            panel2.Location = new Point(16, 946);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(427, 57);
+            panel2.TabIndex = 9;
             // 
             // btnCancel
             // 
@@ -301,7 +299,7 @@
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 14F);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(216, 950);
+            btnCancel.Location = new Point(188, 7);
             btnCancel.Margin = new Padding(2);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(105, 42);
@@ -309,6 +307,22 @@
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += BtnCancel_Click;
+            // 
+            // btnSave
+            // 
+            btnSave.BackColor = Color.SteelBlue;
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 14F);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(305, 7);
+            btnSave.Margin = new Padding(2);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(105, 42);
+            btnSave.TabIndex = 6;
+            btnSave.Text = "Lưu";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += BtnSave_Click;
             // 
             // lbSignInValue
             // 
@@ -345,9 +359,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = Color.WhiteSmoke;
-            Controls.Add(btnSave);
-            Controls.Add(btnCancel);
+            Controls.Add(panel2);
             Controls.Add(_cbManual);
             Controls.Add(lbSignOutValue);
             Controls.Add(lbSignInValue);
@@ -361,7 +375,7 @@
             Margin = new Padding(2);
             Name = "UiAuthen";
             Padding = new Padding(16);
-            Size = new Size(459, 1010);
+            Size = new Size(459, 1019);
             Load += UiAuthen_Load;
             pnImage.ResumeLayout(false);
             pnImage.PerformLayout();
@@ -369,8 +383,10 @@
             pnThongTin.ResumeLayout(false);
             pnThongTin.PerformLayout();
             pnFormContainer.ResumeLayout(false);
+            pnFormContainer.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -401,5 +417,6 @@
         private FlowLayoutPanel pnFormField;
         private ComboBox _cbManual;
         private Panel panel1;
+        private Panel panel2;
     }
 }

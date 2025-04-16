@@ -137,7 +137,7 @@ namespace IdCard.Hanel_obj.components.common
                     Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0),
                     Location = new Point(3, 41),
                     Name = "txtText",
-                    Size = new Size(449, 45),
+                    Width = this.Width,
                     TabIndex = 1,
                     //Text = Field.Label
                 };
@@ -153,7 +153,7 @@ namespace IdCard.Hanel_obj.components.common
                     FormattingEnabled = true,
                     Location = new Point(3, 92),
                     Name = "cbValue",
-                    Size = new Size(449, 46),
+                    Width = this.Width - 6,
                     TabIndex = 2,
                     DropDownStyle = ComboBoxStyle.DropDownList,
                 };
@@ -184,7 +184,7 @@ namespace IdCard.Hanel_obj.components.common
                     Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0),
                     Location = new Point(3, 41),
                     Name = "checkBox",
-                    Size = new Size(449, 45),
+                    Width = this.Width - 6,
                     TabIndex = 1,
                     //Text = Field.Label
                     Checked = false,

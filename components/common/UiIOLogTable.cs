@@ -159,8 +159,6 @@ namespace IdCard.Hanel_obj.components.common
             {
                 var log = _logs[e.RowIndex];
                 var formDetail = new FormIoLogDetail(log.Id);
-                formDetail.Width = 457; 
-                formDetail.Height = 1000;
                 formDetail.StartPosition = FormStartPosition.CenterScreen;
                 formDetail.ShowDialog();
 
