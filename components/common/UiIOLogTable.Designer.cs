@@ -161,7 +161,6 @@
             uiPaginition1.Size = new Size(70, 52);
             uiPaginition1.TabIndex = 1;
             uiPaginition1.TotalPages = 0;
-            uiPaginition1.Load += uiPaginition1_Load;
             // 
             // panel1
             // 
@@ -228,7 +227,6 @@
             countSignedOut.Size = new Size(39, 15);
             countSignedOut.TabIndex = 5;
             countSignedOut.Text = "result";
-            countSignedOut.Click += countSignedOut_Click;
             // 
             // label3
             // 
@@ -290,7 +288,6 @@
             Margin = new Padding(2);
             Name = "UiIOLogTable";
             Size = new Size(1274, 796);
-            Load += UiIOLogTable_Load;
             ((System.ComponentModel.ISupportInitialize)dgvLogIO).EndInit();
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);

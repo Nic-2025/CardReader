@@ -161,8 +161,6 @@ namespace IdCard.Hanel_obj.components.common
                 //     }
                 // };
             }
-
-
         }
 
         private void DgvLogIO_ViewDetail(object? sender, DataGridViewCellEventArgs e)
@@ -171,10 +169,12 @@ namespace IdCard.Hanel_obj.components.common
             if (e.RowIndex >= 0 && dgvLogIO.Columns[e.ColumnIndex].Name == "BtnChiTiet")
             {
                 var log = _logs[e.RowIndex];
-                var formDetail = new FormIoLogDetail(log.Id);
-                formDetail.StartPosition = FormStartPosition.CenterScreen;
+                var formDetail = new FormIoLogDetail(log.Id)
+                {
+                    StartPosition = FormStartPosition.CenterScreen
+                };
                 formDetail.ShowDialog();
-
+                this.LoadData(uiPaginition1.CurrentPage);
             }
         }
 
@@ -183,15 +183,6 @@ namespace IdCard.Hanel_obj.components.common
             this.LoadData(uiPaginition1.CurrentPage);
         }
 
-        private void uiPaginition1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void UiIOLogTable_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void GenerateMockData()
         {
@@ -238,9 +229,9 @@ namespace IdCard.Hanel_obj.components.common
                 e.Handled = true;
                 e.PaintBackground(e.ClipBounds, true);
 
-                string status = e.Value.ToString().ToLower().Trim();
+                string status = e.Value?.ToString()?.ToLower()?.Trim() ?? string.Empty;
                 System.Drawing.Color textColor = System.Drawing.Color.Black;
-                string displayText = e.Value.ToString();
+                string displayText = e.Value?.ToString() ?? string.Empty;
 
                 switch (status)
                 {
@@ -279,13 +270,13 @@ namespace IdCard.Hanel_obj.components.common
                 e.Handled = true;
                 e.PaintBackground(e.ClipBounds, false);
 
-                string text = e.Value.ToString();
+                string text = e.Value?.ToString() ?? string.Empty;
                 System.Drawing.Font font = new(e.CellStyle.Font, FontStyle.Underline);
                 System.Drawing.Color linkColor = System.Drawing.Color.Black;
 
-                using (SolidBrush brush = new SolidBrush(linkColor))
+                using (SolidBrush brush = new(linkColor))
                 {
-                    StringFormat format = new StringFormat
+                    StringFormat format = new()
                     {
                         Alignment = StringAlignment.Center,
                         LineAlignment = StringAlignment.Center
@@ -300,7 +291,7 @@ namespace IdCard.Hanel_obj.components.common
         }
 
 
-        private void dgvLogIO_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
+        private void dgvLogIO_CellMouseMove(object? sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex >= 0 && dgvLogIO.Columns[e.ColumnIndex].Name == "BtnChiTiet")
             {
@@ -310,13 +301,6 @@ namespace IdCard.Hanel_obj.components.common
             {
                 dgvLogIO.Cursor = Cursors.Default;
             }
-        }
-
-        private void countSignedOut_Click(object sender, EventArgs e)
-        {
-            // int row = 8;
-            // worksheet.Cells[4, 2].Value = $"Ngày {From?.ToString("dd/MM/yyyy")}";
-            // worksheet.Cells[5, 2].Value = $"Số lượng: {ioList.Total}";
         }
 
         public void WriteToExcel(string excelTemplatePath)

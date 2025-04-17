@@ -14,7 +14,10 @@ namespace IdCard.Hanel_obj.components.forms
         public FormIoLogDetail(string id)
         {
             _logId = id;
+
             InitializeComponent();
+
+            btnManuaSignOut.Visible = false;
             LoadInfo();
         }
 
@@ -50,10 +53,10 @@ namespace IdCard.Hanel_obj.components.forms
 
             lbHoTenVal.Text = log.Customer?.HoTen ?? "";
             lbCCCDVal.Text = log.CustomerId ?? "";
-            lbSignInValue.Text = log?.CheckInTime.ToString("HH:mm") ?? "--:--";
-            lbSignOutValue.Text = log?.CheckOutTime?.ToString("HH:mm") ?? "--:--";
+            lbSignInValue.Text = log.CheckInTime.ToString("HH:mm") ?? "--:--";
+            lbSignOutValue.Text = log.CheckOutTime?.ToString("HH:mm") ?? "--:--";
 
-            manuaSignOut.Visible = !log.CheckOutTime.HasValue;
+            btnManuaSignOut.Visible = log.CheckOutTime == null;
 
             CreateFormComponent(log.AdditionFields);
         }
@@ -71,6 +74,22 @@ namespace IdCard.Hanel_obj.components.forms
                 };
 
                 pnFormField.Controls.Add(label);
+            }
+        }
+
+        private void BtnManuaSignOut_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ioRepo.UpdateCheckOutTime(_logId, DateTime.Now, 1);
+                MessageBox.Show("Sign out successful.", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch
+            {
+                MessageBox.Show("An error occurred while signing out.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

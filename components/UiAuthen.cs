@@ -106,7 +106,8 @@ namespace IdCard.Hanel_obj.forms
 
                 if (_cardImage == null)
                 {
-                    MessageBox.Show("Vui lòng chụp ảnh và đọc thẻ chip trước!", "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Vui lòng chụp ảnh và đọc thẻ chip trước!", 
+                        "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -127,7 +128,7 @@ namespace IdCard.Hanel_obj.forms
                     else
                     {
                         var result = MessageBox.Show(
-                            "Ảnh chứng minh và mặt không khớp. Bạn có muốn thử lại không?",
+                            $"Ảnh chứng minh và mặt không khớp( score:{score}). Bạn có muốn thử lại không?",
                             "Thông báo lỗi",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -156,7 +157,8 @@ namespace IdCard.Hanel_obj.forms
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi: " + ex.Message, "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi: " + ex.Message, "Thông báo lỗi", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }));
         }
